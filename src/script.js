@@ -17,6 +17,42 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+//                            house
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+
+// ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
+const textureLoader = new THREE.TextureLoader()
+const floorAlphaTexture = textureLoader.load('/floor/alpha.jpg')
+const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(20,20),
+    new THREE.MeshStandardMaterial({
+        alphaMap: floorAlphaTexture,
+    })
+)
+ground.rotation.x = - Math.PI / 2
+scene.add(ground)
+
+// ☰☰☰☰☰☰ House container ☰☰☰☰☰☰
+const houseGroup = new THREE.Group()
+scene.add(houseGroup)
+
+
+
+// ☰☰☰☰☰☰ Walls ☰☰☰☰☰☰
+const walls = new THREE.Mesh(
+    new THREE.BoxGeometry(4, 2.5, 5.5),
+    new THREE.MeshStandardMaterial({
+        color: '#aa00aa' 
+    })
+)
+walls.position.y = 2.5 / 2  // Raise walls so they sit on the ground
+houseGroup.add(walls)
+
+
+
+
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights
@@ -59,15 +95,20 @@ window.addEventListener('resize', () =>
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 
 // ☰☰☰☰☰☰ Base camera ☰☰☰☰☰☰
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 4
-camera.position.y = 2
-camera.position.z = 5
+// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(95, sizes.width / sizes.height, 0.1, 100)
+// camera.position.set(4, 2, 5)
+camera.position.set(4, 3, 8)
 scene.add(camera)
 
 // ☰☰☰☰☰☰ Controls ☰☰☰☰☰☰
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+
+// Focus the camera on the center of the house
+// controls.target.set(0, 1, 2)
+// controls.update()
+
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -102,3 +143,6 @@ const tick = () =>
 }
 
 tick()
+
+
+

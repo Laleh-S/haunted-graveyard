@@ -18,36 +18,57 @@ const scene = new THREE.Scene()
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
-//                            house
+//                            Chapel
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 
 // ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
-const textureLoader = new THREE.TextureLoader()
-const floorAlphaTexture = textureLoader.load('/floor/alpha.jpg')
 const ground = new THREE.Mesh(
     new THREE.PlaneGeometry(20,20),
     new THREE.MeshStandardMaterial({
-        alphaMap: floorAlphaTexture,
     })
 )
 ground.rotation.x = - Math.PI / 2
 scene.add(ground)
 
-// ☰☰☰☰☰☰ House container ☰☰☰☰☰☰
-const houseGroup = new THREE.Group()
-scene.add(houseGroup)
+
+// ☰☰☰☰☰☰ Chapel container ☰☰☰☰☰☰
+const chapel = new THREE.Group()
+scene.add(chapel)
 
 
-
-// ☰☰☰☰☰☰ Walls ☰☰☰☰☰☰
-const walls = new THREE.Mesh(
+// ☰☰☰☰☰☰ Main walls ☰☰☰☰☰☰
+const mainWalls = new THREE.Mesh(
     new THREE.BoxGeometry(4, 2.5, 5.5),
     new THREE.MeshStandardMaterial({
         color: '#aa00aa' 
     })
 )
-walls.position.y = 2.5 / 2  // Raise walls so they sit on the ground
-houseGroup.add(walls)
+mainWalls.position.y = 2.5 / 2  // Raise walls so they sit on the ground
+chapel.add(mainWalls)
+
+
+// ☰☰☰☰☰☰ Main roof ☰☰☰☰☰☰
+const mainRoofGroup = new THREE.Group()
+
+// Left panel
+const leftPanel = new THREE.Mesh(
+  new THREE.BoxGeometry(3, 0.1, 5.5),
+  new THREE.MeshStandardMaterial({ color: '#FF0000' })
+)
+
+leftPanel.rotation.z = -Math.PI / 4
+leftPanel.position.x = 1.05
+leftPanel.position.y = 3.5 
+
+// right panel
+const rightPanel = leftPanel.clone()
+rightPanel.rotation.z = Math.PI / 4
+rightPanel.position.x = -1.05
+leftPanel.position.y = 3.5
+
+mainRoofGroup.add(leftPanel, rightPanel) // Adds the panels to the mainRoofGroup
+chapel.add(mainRoofGroup) // Adds the mainRoofGroup to the chapel 
+
 
 
 

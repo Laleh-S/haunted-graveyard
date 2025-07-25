@@ -18,7 +18,7 @@ const scene = new THREE.Scene()
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
-//                            Chapel
+//                            Main Chapel
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 
 // ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
@@ -52,7 +52,7 @@ const mainRoofGroup = new THREE.Group()
 
 // Left panel
 const leftPanel = new THREE.Mesh(
-  new THREE.BoxGeometry(3, 0.1, 5.5),
+  new THREE.BoxGeometry(3, 0.1, 5.8),
   new THREE.MeshStandardMaterial({ color: '#FF0000' })
 )
 
@@ -70,10 +70,46 @@ mainRoofGroup.add(leftPanel, rightPanel) // Adds the panels to the mainRoofGroup
 chapel.add(mainRoofGroup) // Adds the mainRoofGroup to the chapel 
 
 
+// ☰☰☰☰☰☰ Traingle sahpe gap between roof panels ☰☰☰☰☰☰
+const triangleGroup = new THREE.Group()
+
+const triangleOutline = new THREE.Shape()
+triangleOutline.moveTo(-2.1, 0)  // Bottom-left corner (x, y)
+triangleOutline.lineTo(0, 2.1)  // Top peak 
+triangleOutline.lineTo(2.1, 0)   // Bottom-right corner 
+
+const fronttriangle = new THREE.Mesh(
+    new THREE.ShapeGeometry(triangleOutline), // Passing the gableOutlile to the geometry
+    new THREE.MeshStandardMaterial({
+        color: '#ff33ff',
+        side: THREE.DoubleSide
+    })
+)
+fronttriangle.position.set(0, 2.4, 2.76)
+
+const backtriangle = fronttriangle.clone()
+backtriangle.position.set(0, 2.4, -2.76)
+backtriangle.material.color.set('#ff33ff')
+
+triangleGroup.add(fronttriangle, backtriangle)
+chapel.add(triangleGroup)
 
 
 
+// ☰☰☰☰☰☰ Tower walls ☰☰☰☰☰☰
+const towerGroup = new THREE.Group()
 
+// Tower walls
+const tower = new THREE.Mesh(
+    new THREE.BoxGeometry(1.3, 5, 1),
+    new THREE.MeshStandardMaterial({
+       
+    })
+)
+tower.position.z = 1.7
+tower.position.y = 5.2 / 2 // Raise to sit on the ground (centered on height)
+
+chapel.add(tower)
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights

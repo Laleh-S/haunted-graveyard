@@ -18,7 +18,7 @@ const scene = new THREE.Scene()
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
-//                            Main Chapel
+//                            Chapel
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 
 // ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
@@ -40,7 +40,6 @@ scene.add(chapel)
 const mainWalls = new THREE.Mesh(
     new THREE.BoxGeometry(4, 2.5, 5.5),
     new THREE.MeshStandardMaterial({
-        color: '#aa00aa' 
     })
 )
 mainWalls.position.y = 2.5 / 2  // Raise walls so they sit on the ground
@@ -81,7 +80,6 @@ triangleOutline.lineTo(2.1, 0)   // Bottom-right corner
 const fronttriangle = new THREE.Mesh(
     new THREE.ShapeGeometry(triangleOutline), // Passing the gableOutlile to the geometry
     new THREE.MeshStandardMaterial({
-        color: '#ff33ff',
         side: THREE.DoubleSide
     })
 )
@@ -89,14 +87,13 @@ fronttriangle.position.set(0, 2.4, 2.76)
 
 const backtriangle = fronttriangle.clone()
 backtriangle.position.set(0, 2.4, -2.76)
-backtriangle.material.color.set('#ff33ff')
 
 triangleGroup.add(fronttriangle, backtriangle)
 chapel.add(triangleGroup)
 
 
 
-// ☰☰☰☰☰☰ Tower walls ☰☰☰☰☰☰
+// ☰☰☰☰☰☰ Tower ☰☰☰☰☰☰
 const towerGroup = new THREE.Group()
 
 // Tower walls
@@ -109,7 +106,41 @@ const tower = new THREE.Mesh(
 tower.position.z = 1.7
 tower.position.y = 5.2 / 2 // Raise to sit on the ground (centered on height)
 
-chapel.add(tower)
+
+// Tower roof
+const towerRoof = new THREE.Mesh(
+  new THREE.ConeGeometry(1, 1, 4), // radius, height, 4 segments for pyramid
+  new THREE.MeshStandardMaterial({ color: '#ff3333' })
+)
+towerRoof.rotation.y = Math.PI / 4 // Rotate so flat sides align with box walls
+towerRoof.position.y = 5 + 1.2 / 2 // Tower height + half cone height
+towerRoof.position.z = 1.7
+
+towerGroup.add(tower, towerRoof) 
+chapel.add(towerGroup)
+
+
+// ☰☰☰☰☰☰ Cross ☰☰☰☰☰☰
+const crossGroup = new THREE.Group()
+
+const barGeometry = new THREE.BoxGeometry(0.05, 0.7, 0.05)
+const barMaterial = new THREE.MeshStandardMaterial({})
+
+// Vertical bar
+const verticalBar = new THREE.Mesh(barGeometry, barMaterial)
+verticalBar.position.y = 6.4
+verticalBar.position.z = 1.7
+
+// Horizontal bar
+const horizontalBar = new THREE.Mesh(barGeometry, barMaterial)
+horizontalBar.rotation.z = Math.PI / 2
+horizontalBar.position.y = 6.5
+horizontalBar.position.z = 1.7
+
+crossGroup.add(verticalBar, horizontalBar)
+chapel.add(crossGroup)
+
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights

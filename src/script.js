@@ -191,22 +191,26 @@ for (let i = 0; i < 30; i ++){
     // Cordinates:
     const angle = Math.random() * Math.PI * 2 // Placing graves randomly around a full circle. 
 
-    // Math.random() * 4 -> gives a number between 0 and <4 + 7 gives us a number between 3 and 4
-    const radius = 3 + Math.random() * 4 
+    // Math.random() * 5 -> gives a number between 0 and <5 + 4 gives us a number between 4 and 9
+    const radius = 4 + Math.random() * 5
     const x = Math.sin(angle) * radius 
     const z = Math.cos(angle) * radius 
 
-    // Mesh
+    // Mesh:
     const grave = new THREE.Mesh(graveGeometry, graveMaterial)
     grave.position.x = x
-
-    // Math.random gives random heights to each graves, so one short and one tall. 
-    grave.position.y = Math.random() * 0.8 / 2
+    grave.position.y = Math.random() * 0.4 // Gives random height to graves between between 0 and +0.4
     grave.position.z = z
 
-    // Add to graves Group
+    // Randomly tilt graves:
+    grave.rotation.x = Math.random() - 0.5 // Changes the value between -0.5 to 0.5. 
+    grave.rotation.y = Math.random() - 0.5
+    grave.rotation.z = Math.random() - 0.5
+
     gravesGroup.add(grave)
 }
+
+
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

@@ -178,6 +178,36 @@ chapel.add(bush1, bush2, bush3, bush4)
 
 
 
+// ☰☰☰☰☰☰ Graves ☰☰☰☰☰☰
+const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
+const graveMaterial = new THREE.MeshStandardMaterial({
+})
+
+const gravesGroup = new THREE.Group()
+scene.add(gravesGroup)
+
+for (let i = 0; i < 30; i ++){
+
+    // Cordinates:
+    const angle = Math.random() * Math.PI * 2 // Placing graves randomly around a full circle. 
+
+    // Math.random() * 4 -> gives a number between 0 and <4 + 7 gives us a number between 3 and 4
+    const radius = 3 + Math.random() * 4 
+    const x = Math.sin(angle) * radius 
+    const z = Math.cos(angle) * radius 
+
+    // Mesh
+    const grave = new THREE.Mesh(graveGeometry, graveMaterial)
+    grave.position.x = x
+
+    // Math.random gives random heights to each graves, so one short and one tall. 
+    grave.position.y = Math.random() * 0.8 / 2
+    grave.position.z = z
+
+    // Add to graves Group
+    gravesGroup.add(grave)
+}
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights

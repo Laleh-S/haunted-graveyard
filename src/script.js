@@ -141,6 +141,17 @@ crossGroup.add(verticalBar, horizontalBar)
 chapel.add(crossGroup)
 
 
+// ☰☰☰☰☰☰ Door ☰☰☰☰☰☰
+const door = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.3, 2.2),
+    new THREE.MeshStandardMaterial({
+        color: 'red'
+    })
+)
+door.position.y = 1
+door.position.z = 5.5 / 2 + 0.01 // walls depth / 2
+chapel.add(door)
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights
@@ -187,6 +198,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera(95, sizes.width / sizes.height, 0.1, 100)
 // camera.position.set(4, 2, 5)
 camera.position.set(4, 3, 8)
+camera.lookAt(0, 1, 0)
 scene.add(camera)
 
 // ☰☰☰☰☰☰ Controls ☰☰☰☰☰☰
@@ -197,7 +209,8 @@ controls.enableDamping = true
 // controls.target.set(0, 1, 2)
 // controls.update()
 
-
+const cameraHelper = new THREE.CameraHelper(camera);
+scene.add(cameraHelper);
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                          Renderer 

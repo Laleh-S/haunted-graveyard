@@ -69,7 +69,7 @@ mainRoofGroup.add(leftPanel, rightPanel) // Adds the panels to the mainRoofGroup
 chapel.add(mainRoofGroup) // Adds the mainRoofGroup to the chapel 
 
 
-// ☰☰☰☰☰☰ Traingle sahpe gap between roof panels ☰☰☰☰☰☰
+// ☰☰☰☰☰☰ Traingle shape gap between roof panels ☰☰☰☰☰☰
 const triangleGroup = new THREE.Group()
 
 const triangleOutline = new THREE.Shape()
@@ -153,6 +153,32 @@ door.position.z = 5.5 / 2 + 0.01 // walls depth / 2
 chapel.add(door)
 
 
+
+// ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰
+const bushGeometry = new THREE.SphereGeometry(1, 16, 116)
+const bushMaterial = new THREE.MeshStandardMaterial()
+
+const bush1 = new THREE.Mesh(bushGeometry, bushMaterial)
+bush1.scale.set(0.5, 0.5, 0.5)
+bush1.position.set(0.8, 0.2, 3.2)
+
+const bush2 = new THREE.Mesh(bushGeometry, bushMaterial)
+bush2.scale.set(0.25, 0.25, 0.25)
+bush2.position.set(1.4, 0.1, 3.1)
+
+const bush3 = new THREE.Mesh(bushGeometry, bushMaterial)
+bush3.scale.set(0.4, 0.4, 0.4)
+bush3.position.set(-0.8, 0.1, 3.1)
+
+const bush4 = new THREE.Mesh(bushGeometry, bushMaterial)
+bush4.scale.set(0.15, 0.15, 0.15)
+bush4.position.set(-1, 0.05, 3.5)
+
+chapel.add(bush1, bush2, bush3, bush4)
+
+
+
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -209,8 +235,9 @@ controls.enableDamping = true
 // controls.target.set(0, 1, 2)
 // controls.update()
 
+// ☰☰☰☰☰☰ Camera helper ☰☰☰☰☰☰
 const cameraHelper = new THREE.CameraHelper(camera);
-scene.add(cameraHelper);
+scene.add(cameraHelper)
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                          Renderer 

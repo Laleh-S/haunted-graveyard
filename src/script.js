@@ -24,28 +24,29 @@ const textureLoader = new THREE.TextureLoader()
 
 // ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
 const groundAlphaTexture = textureLoader.load('/floor/alpha.jpg')
-
-const groundColorTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_diff_1k.webp')
-const groundArmTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_arm_1k.webp')
-const groundNormalTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_nor_gl_1k.webp')
-const groundDisplacementTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_disp_1k.webp')
+const groundColorTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_diff_1k.jpg')
+const groundArmTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_arm_1k.jpg')
+const groundNormalTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_nor_gl_1k.jpg')
+const groundDisplacementTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_disp_1k.jpg')
 
 groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
+
 // Ground Textures Setup: Tiling and Wrapping
-groundColorTexture.repeat.set(8, 8)
+groundColorTexture.repeat.set(15, 12)
 groundColorTexture.wrapS = THREE.RepeatWrapping
 groundColorTexture.wrapT = THREE.RepeatWrapping
 
-groundColorTexture.repeat.set(8, 8)
+groundColorTexture.repeat.set(15, 12)
 groundArmTexture.wrapS = THREE.RepeatWrapping
 groundArmTexture.wrapT = THREE.RepeatWrapping
 
-groundNormalTexture.repeat.set(8, 8)
+groundNormalTexture.repeat.set(15, 12)
 groundNormalTexture .wrapS = THREE.RepeatWrapping
 groundNormalTexture .wrapT = THREE.RepeatWrapping
 
-groundDisplacementTexture.repeat.set(8, 8)
+
+groundDisplacementTexture.repeat.set(15, 12)
 groundDisplacementTexture.wrapS = THREE.RepeatWrapping
 groundDisplacementTexture.wrapT = THREE.RepeatWrapping
 
@@ -70,9 +71,10 @@ const ground = new THREE.Mesh(
         displacementScale: 0.3,
     })
 )
+ground.material.color.set('#c0c0c0') // Tints the ground color 
+
 ground.rotation.x = - Math.PI / 2
 scene.add(ground)
-
 
 // ☰☰☰☰☰☰ Chapel container ☰☰☰☰☰☰
 const chapel = new THREE.Group()

@@ -69,12 +69,17 @@ const ground = new THREE.Mesh(
         normalMap: groundNormalTexture,
         displacementMap: groundDisplacementTexture,
         displacementScale: 0.3,
+        displacementBias: - 0.2
     })
 )
 ground.material.color.set('#c0c0c0') // Tints the ground color 
 
 ground.rotation.x = - Math.PI / 2
 scene.add(ground)
+
+// GUI controls for fine-tuning the ground's height map effect
+gui.add(ground.material, 'displacementScale').min(0).max(1).step(0.001).name('Displacement Scale')
+gui.add(ground.material, 'displacementBias').min(-1).max(1).step(0.001).name('Ground Displacement')
 
 // ☰☰☰☰☰☰ Chapel container ☰☰☰☰☰☰
 const chapel = new THREE.Group()

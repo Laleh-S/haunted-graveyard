@@ -18,13 +18,56 @@ const scene = new THREE.Scene()
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+//                            Textures
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+const textureLoader = new THREE.TextureLoader()
+
+// ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
+const groundAlphaTexture = textureLoader.load('/floor/alpha.jpg')
+
+const groundColorTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_diff_1k.webp')
+const groundArmTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_arm_1k.webp')
+const groundNormalTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_nor_gl_1k.webp')
+const groundDisplacementTexture = textureLoader.load('/floor/coast_sand_rocks/coast_sand_rocks_02_disp_1k.webp')
+
+groundColorTexture.colorSpace = THREE.SRGBColorSpace
+
+// Ground Textures Setup: Tiling and Wrapping
+groundColorTexture.repeat.set(8, 8)
+groundColorTexture.wrapS = THREE.RepeatWrapping
+groundColorTexture.wrapT = THREE.RepeatWrapping
+
+groundColorTexture.repeat.set(8, 8)
+groundArmTexture.wrapS = THREE.RepeatWrapping
+groundArmTexture.wrapT = THREE.RepeatWrapping
+
+groundNormalTexture.repeat.set(8, 8)
+groundNormalTexture .wrapS = THREE.RepeatWrapping
+groundNormalTexture .wrapT = THREE.RepeatWrapping
+
+groundDisplacementTexture.repeat.set(8, 8)
+groundDisplacementTexture.wrapS = THREE.RepeatWrapping
+groundDisplacementTexture.wrapT = THREE.RepeatWrapping
+
+
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Chapel
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 
 // ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
 const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(20,20),
+    new THREE.PlaneGeometry(25,25, 100, 100), // Add no more than 100 vertices for details, use normalMap instead.
     new THREE.MeshStandardMaterial({
+        alphaMap: groundAlphaTexture,
+        transparent: true, // Enables transparency support for alphaMap and opacity
+        map: groundColorTexture,
+        aoMap: groundArmTexture,
+        roughnessMap: groundArmTexture,
+        metalnessMap: groundArmTexture,
+        normalMap: groundNormalTexture,
+        displacementMap: groundDisplacementTexture,
+        displacementScale: 0.3,
     })
 )
 ground.rotation.x = - Math.PI / 2
@@ -177,7 +220,6 @@ bush4.position.set(-1, 0.05, 3.5)
 chapel.add(bush1, bush2, bush3, bush4)
 
 
-
 // ☰☰☰☰☰☰ Graves ☰☰☰☰☰☰
 const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
 const graveMaterial = new THREE.MeshStandardMaterial({
@@ -191,8 +233,8 @@ for (let i = 0; i < 30; i ++){
     // Cordinates:
     const angle = Math.random() * Math.PI * 2 // Placing graves randomly around a full circle. 
 
-    // Math.random() * 5 -> gives a number between 0 and <5 + 4 gives us a number between 4 and 9
-    const radius = 4 + Math.random() * 5
+    // Math.random() * 5 -> gives a number between 0 and <5 + 4 gives us a number between 5 and 10
+    const radius = 5 + Math.random() * 5
     const x = Math.sin(angle) * radius 
     const z = Math.cos(angle) * radius 
 
@@ -209,7 +251,6 @@ for (let i = 0; i < 30; i ++){
 
     gravesGroup.add(grave)
 }
-
 
 
 

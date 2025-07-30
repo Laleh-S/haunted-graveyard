@@ -29,8 +29,8 @@ const groundArmTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_
 const groundNormalTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_nor_gl_1k.jpg')
 const groundDisplacementTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_disp_1k.jpg')
 
-groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
+groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
 // Ground Textures Setup: Tiling and Wrapping
 groundColorTexture.repeat.set(15, 12)
@@ -41,6 +41,7 @@ groundColorTexture.repeat.set(15, 12)
 groundArmTexture.wrapS = THREE.RepeatWrapping
 groundArmTexture.wrapT = THREE.RepeatWrapping
 
+
 groundNormalTexture.repeat.set(15, 12)
 groundNormalTexture .wrapS = THREE.RepeatWrapping
 groundNormalTexture .wrapT = THREE.RepeatWrapping
@@ -49,6 +50,16 @@ groundNormalTexture .wrapT = THREE.RepeatWrapping
 groundDisplacementTexture.repeat.set(15, 12)
 groundDisplacementTexture.wrapS = THREE.RepeatWrapping
 groundDisplacementTexture.wrapT = THREE.RepeatWrapping
+
+
+
+// ☰☰☰☰☰☰ Walls ☰☰☰☰☰☰
+const wallColorTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_diff_1k.jpg')
+const wallArmTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_arm_1k.jpg')
+const wallNormalTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_nor_gl_1k.jpg')
+const wallDisplacementTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_disp_1k.jpg')
+
+wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
 
 
@@ -69,11 +80,10 @@ const ground = new THREE.Mesh(
         normalMap: groundNormalTexture,
         displacementMap: groundDisplacementTexture,
         displacementScale: 0.3,
-        displacementBias: - 0.2
+        displacementBias: - 0.2,
+        // color: new THREE.Color('#aaaaaa') 
     })
 )
-ground.material.color.set('#c0c0c0') // Tints the ground color 
-
 ground.rotation.x = - Math.PI / 2
 scene.add(ground)
 
@@ -90,6 +100,11 @@ scene.add(chapel)
 const mainWalls = new THREE.Mesh(
     new THREE.BoxGeometry(4, 2.5, 5.5),
     new THREE.MeshStandardMaterial({
+        map: wallColorTexture,
+        aoMap: wallArmTexture,
+        roughnessMap: wallArmTexture,
+        metalnessMap: wallArmTexture,
+        normalMap: wallNormalTexture,
     })
 )
 mainWalls.position.y = 2.5 / 2  // Raise walls so they sit on the ground
@@ -102,7 +117,7 @@ const mainRoofGroup = new THREE.Group()
 // Left panel
 const leftPanel = new THREE.Mesh(
   new THREE.BoxGeometry(3, 0.1, 5.8),
-  new THREE.MeshStandardMaterial({ color: '#FF0000' })
+  new THREE.MeshStandardMaterial({ })
 )
 
 leftPanel.rotation.z = -Math.PI / 4
@@ -130,7 +145,7 @@ triangleOutline.lineTo(2.1, 0)   // Bottom-right corner
 const fronttriangle = new THREE.Mesh(
     new THREE.ShapeGeometry(triangleOutline), // Passing the gableOutlile to the geometry
     new THREE.MeshStandardMaterial({
-        side: THREE.DoubleSide
+    side: THREE.DoubleSide
     })
 )
 fronttriangle.position.set(0, 2.4, 2.76)
@@ -145,22 +160,17 @@ chapel.add(triangleGroup)
 
 // ☰☰☰☰☰☰ Tower ☰☰☰☰☰☰
 const towerGroup = new THREE.Group()
-
-// Tower walls
 const tower = new THREE.Mesh(
-    new THREE.BoxGeometry(1.3, 5, 1),
-    new THREE.MeshStandardMaterial({
-       
-    })
+  new THREE.BoxGeometry(1.3, 2, 1),
+  new THREE.MeshStandardMaterial({})
 )
 tower.position.z = 1.7
-tower.position.y = 5.2 / 2 // Raise to sit on the ground (centered on height)
-
+tower.position.y = 8.2 / 2 // Raise to sit on the ground (centered on height)
 
 // Tower roof
 const towerRoof = new THREE.Mesh(
   new THREE.ConeGeometry(1, 1, 4), // radius, height, 4 segments for pyramid
-  new THREE.MeshStandardMaterial({ color: '#ff3333' })
+  new THREE.MeshStandardMaterial({ })
 )
 towerRoof.rotation.y = Math.PI / 4 // Rotate so flat sides align with box walls
 towerRoof.position.y = 5 + 1.2 / 2 // Tower height + half cone height

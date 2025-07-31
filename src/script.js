@@ -78,21 +78,39 @@ const roofSpecTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_sp
 
 roofColorTexture.colorSpace = THREE.SRGBColorSpace
 
-roofColorTexture.repeat.set(2, 2);
-roofColorTexture.wrapS = THREE.RepeatWrapping;
-roofColorTexture.wrapT = THREE.RepeatWrapping;
+roofColorTexture.repeat.set(2, 2)
+roofColorTexture.wrapS = THREE.RepeatWrapping
+roofColorTexture.wrapT = THREE.RepeatWrapping
 
-roofArmTexture.repeat.set(2, 2);
-roofArmTexture.wrapS = THREE.RepeatWrapping;
-roofArmTexture.wrapT = THREE.RepeatWrapping;
+roofArmTexture.repeat.set(2, 2)
+roofArmTexture.wrapS = THREE.RepeatWrapping
+roofArmTexture.wrapT = THREE.RepeatWrapping
 
-roofNormalTexture.repeat.set(2, 2);
-roofNormalTexture.wrapS = THREE.RepeatWrapping;
-roofNormalTexture.wrapT = THREE.RepeatWrapping;
+roofNormalTexture.repeat.set(2, 2)
+roofNormalTexture.wrapS = THREE.RepeatWrapping
+roofNormalTexture.wrapT = THREE.RepeatWrapping
 
-roofSpecTexture.repeat.set(2, 2);
-roofSpecTexture.wrapS = THREE.RepeatWrapping;
-roofSpecTexture.wrapT = THREE.RepeatWrapping;
+roofSpecTexture.repeat.set(2, 2)
+roofSpecTexture.wrapS = THREE.RepeatWrapping
+roofSpecTexture.wrapT = THREE.RepeatWrapping
+
+
+// Tower roof textures (separate load to avoid cloning issues)
+const towerRoofColorTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_diff_1k.jpg')
+const towerRoofArmTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_arm_1k.jpg')
+const towerRoofNormalTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_nor_gl_1k.jpg')
+const towerRoofDisplacementTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_disp_1k.jpg')
+const towerRoofBumpTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_bump_1k.exr')
+const towerRoofSpecTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_spec_1k.jpg')
+
+towerRoofColorTexture.colorSpace = THREE.SRGBColorSpace
+
+// towerRoofColorTexture.wrapS = THREE.RepeatWrapping;
+towerRoofColorTexture.wrapS = THREE.RepeatWrapping
+towerRoofColorTexture.repeat.x = 3   
+
+
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Chapel
@@ -217,8 +235,15 @@ tower.position.y = 8.2 / 2 // Raise to sit on the ground (centered on height)
 
 // Tower roof
 const towerRoof = new THREE.Mesh(
-  new THREE.ConeGeometry(1, 1, 4), // radius, height, 4 segments for pyramid
-  new THREE.MeshStandardMaterial({ })
+  new THREE.ConeGeometry(1, 1, 4),
+  new THREE.MeshStandardMaterial({
+        map: towerRoofColorTexture,
+        aoMap: towerRoofArmTexture,
+        roughnessMap: towerRoofArmTexture,
+        metalnessMap: towerRoofSpecTexture,
+        normalMap: towerRoofNormalTexture,
+        // bumpMap: towerRoofBumpTexture,
+   })
 )
 towerRoof.rotation.y = Math.PI / 4 // Rotate so flat sides align with box walls
 towerRoof.position.y = 5 + 1.2 / 2 // Tower height + half cone height

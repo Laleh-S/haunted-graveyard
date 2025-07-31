@@ -37,7 +37,7 @@ groundColorTexture.repeat.set(15, 12)
 groundColorTexture.wrapS = THREE.RepeatWrapping
 groundColorTexture.wrapT = THREE.RepeatWrapping
 
-groundColorTexture.repeat.set(15, 12)
+groundArmTexture.repeat.set(15, 12)
 groundArmTexture.wrapS = THREE.RepeatWrapping
 groundArmTexture.wrapT = THREE.RepeatWrapping
 
@@ -59,9 +59,40 @@ const wallArmTexture = textureLoader.load('/wall/castle_brick_broken/castle_bric
 const wallNormalTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_nor_gl_1k.jpg')
 const wallDisplacementTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_disp_1k.jpg')
 
+
+// const wallColorTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_diff_1k.jpg')
+// const wallArmTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_arm_1k.jpg')
+// const wallNormalTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_nor_gl_1k.jpg')
+// const wallDisplacementTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_disp_1k.jpg')
+
 wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
 
+// ☰☰☰☰☰☰ Roof ☰☰☰☰☰☰
+const roofColorTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_diff_1k.jpg')
+const roofArmTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_arm_1k.jpg')
+const roofNormalTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_nor_gl_1k.jpg')
+const roofDisplacementTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_disp_1k.jpg')
+const roofBumpTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_bump_1k.exr')
+const roofSpecTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_spec_1k.jpg')
+
+roofColorTexture.colorSpace = THREE.SRGBColorSpace
+
+roofColorTexture.repeat.set(2, 2);
+roofColorTexture.wrapS = THREE.RepeatWrapping;
+roofColorTexture.wrapT = THREE.RepeatWrapping;
+
+roofArmTexture.repeat.set(2, 2);
+roofArmTexture.wrapS = THREE.RepeatWrapping;
+roofArmTexture.wrapT = THREE.RepeatWrapping;
+
+roofNormalTexture.repeat.set(2, 2);
+roofNormalTexture.wrapS = THREE.RepeatWrapping;
+roofNormalTexture.wrapT = THREE.RepeatWrapping;
+
+roofSpecTexture.repeat.set(2, 2);
+roofSpecTexture.wrapS = THREE.RepeatWrapping;
+roofSpecTexture.wrapT = THREE.RepeatWrapping;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Chapel
@@ -114,23 +145,40 @@ chapel.add(mainWalls)
 // ☰☰☰☰☰☰ Main roof ☰☰☰☰☰☰
 const mainRoofGroup = new THREE.Group()
 
-// Left panel
-const leftPanel = new THREE.Mesh(
+// Right panel
+const rightPanel = new THREE.Mesh(
   new THREE.BoxGeometry(3, 0.1, 5.8),
-  new THREE.MeshStandardMaterial({ })
+  new THREE.MeshStandardMaterial({ 
+        map: roofColorTexture,
+        aoMap: roofArmTexture,
+        roughnessMap: roofArmTexture,
+        metalnessMap: roofSpecTexture, 
+        normalMap: roofNormalTexture,
+        bumpMap: roofBumpTexture,            // Bump map
+        bumpScale: 0.2,  
+  })
 )
 
-leftPanel.rotation.z = -Math.PI / 4
-leftPanel.position.x = 1.05
-leftPanel.position.y = 3.5 
+roofColorTexture.center.set(0.5, 0.5);
+roofColorTexture.rotation = Math.PI / 2;
 
-// right panel
-const rightPanel = leftPanel.clone()
-rightPanel.rotation.z = Math.PI / 4
-rightPanel.position.x = -1.05
+roofArmTexture.center.set(0.5, 0.5);
+roofArmTexture.rotation = Math.PI / 2;
+
+
+rightPanel.rotation.z = -Math.PI / 4
+rightPanel.position.x = 1.05
+rightPanel.position.y = 3.5 
+
+// Left panel
+const leftPanel = rightPanel.clone()
+leftPanel.rotation.z = Math.PI / 4
+leftPanel.position.x = -1.05
 leftPanel.position.y = 3.5
 
-mainRoofGroup.add(leftPanel, rightPanel) // Adds the panels to the mainRoofGroup
+
+
+mainRoofGroup.add(rightPanel, leftPanel) // Adds the panels to the mainRoofGroup
 chapel.add(mainRoofGroup) // Adds the mainRoofGroup to the chapel 
 
 
@@ -145,7 +193,7 @@ triangleOutline.lineTo(2.1, 0)   // Bottom-right corner
 const fronttriangle = new THREE.Mesh(
     new THREE.ShapeGeometry(triangleOutline), // Passing the gableOutlile to the geometry
     new THREE.MeshStandardMaterial({
-    side: THREE.DoubleSide
+    side: THREE.DoubleSide,
     })
 )
 fronttriangle.position.set(0, 2.4, 2.76)

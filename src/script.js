@@ -96,20 +96,28 @@ roofSpecTexture.wrapT = THREE.RepeatWrapping
 
 
 // Tower roof textures (separate load to avoid cloning issues)
-const towerRoofColorTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_diff_1k.jpg')
-const towerRoofArmTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_arm_1k.jpg')
-const towerRoofNormalTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_nor_gl_1k.jpg')
-const towerRoofDisplacementTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_disp_1k.jpg')
-const towerRoofBumpTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_bump_1k.exr')
-const towerRoofSpecTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_spec_1k.jpg')
+const towerRoofColorTexture = roofColorTexture 
+const towerRoofArmTexture = roofArmTexture 
+const towerRoofNormalTexture = roofNormalTexture  
+const towerRoofDisplacementTexture = roofDisplacementTexture 
+const towerRoofBumpTexture = roofBumpTexture  
+const towerRoofSpecTexture = roofSpecTexture
 
-towerRoofColorTexture.colorSpace = THREE.SRGBColorSpace
-
-// towerRoofColorTexture.wrapS = THREE.RepeatWrapping;
+towerRoofColorTexture.repeat.set(2, 3)
 towerRoofColorTexture.wrapS = THREE.RepeatWrapping
-towerRoofColorTexture.repeat.x = 3   
+towerRoofColorTexture.wrapT = THREE.RepeatWrapping
 
+towerRoofArmTexture.repeat.set(2, 3)
+towerRoofArmTexture.wrapS = THREE.RepeatWrapping
+towerRoofArmTexture.wrapT = THREE.RepeatWrapping
 
+towerRoofNormalTexture.repeat.set(2, 3)
+towerRoofNormalTexture.wrapS = THREE.RepeatWrapping
+towerRoofNormalTexture.wrapT = THREE.RepeatWrapping
+
+towerRoofSpecTexture.repeat.set(2, 3)
+towerRoofSpecTexture.wrapS = THREE.RepeatWrapping
+towerRoofSpecTexture.wrapT = THREE.RepeatWrapping
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

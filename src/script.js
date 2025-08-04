@@ -121,11 +121,26 @@ towerRoofNormalTexture.wrapT = THREE.RepeatWrapping;
 towerRoofNormalTexture.repeat.set(0.8, 0.8);
 
 
-
+// ☰☰☰☰☰☰ Bush ☰☰☰☰☰☰
 const bushColorTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.jpg')
 const bushArmTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.webp')
 const bushNormalTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.jpg')
 bushColorTexture.colorSpace = THREE.SRGBColorSpace
+
+
+// ☰☰☰☰☰☰ Grave ☰☰☰☰☰☰
+const graveColorTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.jpg')
+const graveArmTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.jpg')
+const graveNormalTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.jpg')
+
+graveColorTexture.colorSpace = THREE.SRGBColorSpace
+
+// Don’t need WrapS and wrapT when repeat values are less than 1 
+graveColorTexture.repeat.set(0.3, 0.4) // Asking the texture to repeat 0.3 times horizontally (U) and 0.4 times vertically (V)
+graveArmTexture.repeat.set(0.3, 0.4)
+graveNormalTexture.repeat.set(0.3, 0.4)
+graveColorTexture.colorSpace = THREE.SRGBColorSpace
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Chapel
@@ -351,6 +366,12 @@ chapel.add(bush1, bush2, bush3, bush4)
 // ☰☰☰☰☰☰ Graves ☰☰☰☰☰☰
 const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
 const graveMaterial = new THREE.MeshStandardMaterial({
+    map: graveColorTexture,
+    aoMap: graveArmTexture,
+    roughnessMap: graveArmTexture,
+    metalnessMap: graveArmTexture,
+    normalMap: graveArmTexture,
+    
 })
 
 const gravesGroup = new THREE.Group()

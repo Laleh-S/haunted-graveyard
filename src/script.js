@@ -68,56 +68,37 @@ const wallDisplacementTexture = textureLoader.load('/wall/castle_brick_broken/ca
 wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
 
-// ☰☰☰☰☰☰ Roof ☰☰☰☰☰☰
-const roofColorTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_diff_1k.jpg')
-const roofArmTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_arm_1k.jpg')
-const roofNormalTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_nor_gl_1k.jpg')
-const roofDisplacementTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_disp_1k.jpg')
-const roofBumpTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_bump_1k.exr')
-const roofSpecTexture = textureLoader.load('/roof/roof_tiles_14/roof_tiles_14_spec_1k.jpg')
+// ☰☰☰☰☰☰ Tower ☰☰☰☰☰☰
+const  towerColorTexture = wallColorTexture
+const  towerArmTexture = wallArmTexture
+const  towerNormalTexture = wallNormalTexture
+const  towerDisplacementTexture = wallDisplacementTexture
 
+
+
+// ☰☰☰☰☰☰ Roof ☰☰☰☰☰☰
+const roofColorTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp')
+const roofArmTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp')
+const roofNormalTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp')
 roofColorTexture.colorSpace = THREE.SRGBColorSpace
 
-roofColorTexture.repeat.set(2, 2)
-roofColorTexture.wrapS = THREE.RepeatWrapping
-roofColorTexture.wrapT = THREE.RepeatWrapping
+const towerRoofColorTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp')
+const towerRoofArmTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp')
+const towerRoofNormalTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp')
+towerRoofColorTexture.colorSpace = THREE.SRGBColorSpace
 
-roofArmTexture.repeat.set(2, 2)
-roofArmTexture.wrapS = THREE.RepeatWrapping
-roofArmTexture.wrapT = THREE.RepeatWrapping
+towerRoofColorTexture.wrapS = THREE.RepeatWrapping;
+towerRoofColorTexture.wrapT = THREE.RepeatWrapping;
+towerRoofColorTexture.repeat.set(0.8, 0.8); 
 
-roofNormalTexture.repeat.set(2, 2)
-roofNormalTexture.wrapS = THREE.RepeatWrapping
-roofNormalTexture.wrapT = THREE.RepeatWrapping
+towerRoofArmTexture.wrapS = THREE.RepeatWrapping;
+towerRoofArmTexture.wrapT = THREE.RepeatWrapping;
+towerRoofArmTexture.repeat.set(0.8, 0.8);
 
-roofSpecTexture.repeat.set(2, 2)
-roofSpecTexture.wrapS = THREE.RepeatWrapping
-roofSpecTexture.wrapT = THREE.RepeatWrapping
+towerRoofNormalTexture.wrapS = THREE.RepeatWrapping;
+towerRoofNormalTexture.wrapT = THREE.RepeatWrapping;
+towerRoofNormalTexture.repeat.set(0.8, 0.8);
 
-
-// Tower roof textures (separate load to avoid cloning issues)
-const towerRoofColorTexture = roofColorTexture 
-const towerRoofArmTexture = roofArmTexture 
-const towerRoofNormalTexture = roofNormalTexture  
-const towerRoofDisplacementTexture = roofDisplacementTexture 
-const towerRoofBumpTexture = roofBumpTexture  
-const towerRoofSpecTexture = roofSpecTexture
-
-towerRoofColorTexture.repeat.set(2, 3)
-towerRoofColorTexture.wrapS = THREE.RepeatWrapping
-towerRoofColorTexture.wrapT = THREE.RepeatWrapping
-
-towerRoofArmTexture.repeat.set(2, 3)
-towerRoofArmTexture.wrapS = THREE.RepeatWrapping
-towerRoofArmTexture.wrapT = THREE.RepeatWrapping
-
-towerRoofNormalTexture.repeat.set(2, 3)
-towerRoofNormalTexture.wrapS = THREE.RepeatWrapping
-towerRoofNormalTexture.wrapT = THREE.RepeatWrapping
-
-towerRoofSpecTexture.repeat.set(2, 3)
-towerRoofSpecTexture.wrapS = THREE.RepeatWrapping
-towerRoofSpecTexture.wrapT = THREE.RepeatWrapping
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -178,9 +159,9 @@ const rightPanel = new THREE.Mesh(
         map: roofColorTexture,
         aoMap: roofArmTexture,
         roughnessMap: roofArmTexture,
-        metalnessMap: roofSpecTexture, 
+        // metalnessMap: roofSpecTexture, 
         normalMap: roofNormalTexture,
-        bumpMap: roofBumpTexture,            // Bump map
+        // bumpMap: roofBumpTexture,            // Bump map
         bumpScale: 0.2,  
   })
 )
@@ -236,10 +217,17 @@ chapel.add(triangleGroup)
 const towerGroup = new THREE.Group()
 const tower = new THREE.Mesh(
   new THREE.BoxGeometry(1.3, 2, 1),
-  new THREE.MeshStandardMaterial({})
+  new THREE.MeshStandardMaterial({
+     map: towerColorTexture,
+     aoMap: towerArmTexture,
+        roughnessMap: towerArmTexture,
+        metalnessMap: towerArmTexture,
+        normalMap: towerNormalTexture,
+  })
 )
 tower.position.z = 1.7
 tower.position.y = 8.2 / 2 // Raise to sit on the ground (centered on height)
+
 
 // Tower roof
 const towerRoof = new THREE.Mesh(
@@ -248,7 +236,7 @@ const towerRoof = new THREE.Mesh(
         map: towerRoofColorTexture,
         aoMap: towerRoofArmTexture,
         roughnessMap: towerRoofArmTexture,
-        metalnessMap: towerRoofSpecTexture,
+        // metalnessMap: towerRoofSpecTexture,
         normalMap: towerRoofNormalTexture,
         // bumpMap: towerRoofBumpTexture,
    })

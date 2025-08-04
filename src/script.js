@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
 
@@ -29,9 +30,6 @@ const groundArmTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_
 const groundNormalTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_nor_gl_1k.jpg')
 const groundDisplacementTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_disp_1k.jpg')
 
-
-
-
 groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
 // Ground Textures Setup: Tiling and Wrapping
@@ -60,13 +58,6 @@ const wallColorTexture = textureLoader.load('/wall/castle_brick_broken/castle_br
 const wallArmTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_arm_1k.jpg')
 const wallNormalTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_nor_gl_1k.jpg')
 const wallDisplacementTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_disp_1k.jpg')
-
-
-// const wallColorTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_diff_1k.jpg')
-// const wallArmTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_arm_1k.jpg')
-// const wallNormalTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_nor_gl_1k.jpg')
-// const wallDisplacementTexture = textureLoader.load('/wall/castle_brick_02_white/castle_brick_02_white_disp_1k.jpg')
-
 wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
 
@@ -103,22 +94,25 @@ const roofArmTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_0
 const roofNormalTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp')
 roofColorTexture.colorSpace = THREE.SRGBColorSpace
 
+
+// ☰☰☰☰☰☰ Tower roof ☰☰☰☰☰☰
 const towerRoofColorTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp')
 const towerRoofArmTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp')
 const towerRoofNormalTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp')
+
 towerRoofColorTexture.colorSpace = THREE.SRGBColorSpace
 
-towerRoofColorTexture.wrapS = THREE.RepeatWrapping;
-towerRoofColorTexture.wrapT = THREE.RepeatWrapping;
-towerRoofColorTexture.repeat.set(0.8, 0.8); 
+towerRoofColorTexture.wrapS = THREE.RepeatWrapping
+towerRoofColorTexture.wrapT = THREE.RepeatWrapping
+towerRoofColorTexture.repeat.set(0.8, 0.8)
 
-towerRoofArmTexture.wrapS = THREE.RepeatWrapping;
-towerRoofArmTexture.wrapT = THREE.RepeatWrapping;
-towerRoofArmTexture.repeat.set(0.8, 0.8);
+towerRoofArmTexture.wrapS = THREE.RepeatWrapping
+towerRoofArmTexture.wrapT = THREE.RepeatWrapping
+towerRoofArmTexture.repeat.set(0.8, 0.8)
 
-towerRoofNormalTexture.wrapS = THREE.RepeatWrapping;
-towerRoofNormalTexture.wrapT = THREE.RepeatWrapping;
-towerRoofNormalTexture.repeat.set(0.8, 0.8);
+towerRoofNormalTexture.wrapS = THREE.RepeatWrapping
+towerRoofNormalTexture.wrapT = THREE.RepeatWrapping
+towerRoofNormalTexture.repeat.set(0.8, 0.8)
 
 
 // ☰☰☰☰☰☰ Bush ☰☰☰☰☰☰
@@ -141,6 +135,23 @@ graveArmTexture.repeat.set(0.3, 0.4)
 graveNormalTexture.repeat.set(0.3, 0.4)
 graveColorTexture.colorSpace = THREE.SRGBColorSpace
 
+
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+//                            Models
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+const loader = new GLTFLoader()
+
+// ☰☰☰☰☰☰ Door ☰☰☰☰☰☰
+loader.load('./models/door.glb', (gltf) => {
+const doorModel = gltf.scene
+// No need to create geometry — it's already inside gltf.scene
+doorModel.scale.set(0.8, 0.8, 0.8)
+doorModel.rotation.y = -Math.PI / 2
+doorModel.position.set(-1.7, -3.3, 5.9)
+
+chapel.add(doorModel)
+})
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Chapel
@@ -200,10 +211,7 @@ const rightPanel = new THREE.Mesh(
         map: roofColorTexture,
         aoMap: roofArmTexture,
         roughnessMap: roofArmTexture,
-        // metalnessMap: roofSpecTexture, 
-        normalMap: roofNormalTexture,
-        // bumpMap: roofBumpTexture,          
-        bumpScale: 0.2,  
+        normalMap: roofNormalTexture,  
   })
 )
 
@@ -217,6 +225,7 @@ roofArmTexture.rotation = Math.PI / 2;
 rightPanel.rotation.z = -Math.PI / 4
 rightPanel.position.x = 1.05
 rightPanel.position.y = 3.5 
+
 
 // Left panel
 const leftPanel = rightPanel.clone()
@@ -246,7 +255,6 @@ const triangleMaterial = new THREE.MeshStandardMaterial({
         roughnessMap: triangleArmTexture,
         metalnessMap: triangleArmTexture,
         normalMap: triangleNormalTexture,
-
     })
 const fronttriangle = new THREE.Mesh(triangleGeometry, triangleMaterial)
 fronttriangle.position.set(0, 2.4, 2.76)
@@ -282,9 +290,7 @@ const towerRoof = new THREE.Mesh(
         map: towerRoofColorTexture,
         aoMap: towerRoofArmTexture,
         roughnessMap: towerRoofArmTexture,
-        // metalnessMap: towerRoofSpecTexture,
         normalMap: towerRoofNormalTexture,
-        // bumpMap: towerRoofBumpTexture,
    })
 )
 towerRoof.rotation.y = Math.PI / 4 // Rotate so flat sides align with box walls
@@ -314,19 +320,6 @@ horizontalBar.position.z = 1.7
 
 crossGroup.add(verticalBar, horizontalBar)
 chapel.add(crossGroup)
-
-
-// ☰☰☰☰☰☰ Door ☰☰☰☰☰☰
-const door = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.3, 2.2),
-    new THREE.MeshStandardMaterial({
-        color: 'red'
-    })
-)
-door.position.y = 1
-door.position.z = 5.5 / 2 + 0.01 // walls depth / 2
-chapel.add(door)
-
 
 
 // ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰

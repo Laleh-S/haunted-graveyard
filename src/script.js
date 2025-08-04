@@ -30,6 +30,8 @@ const groundNormalTexture = textureLoader.load('/floor/rocky_terrain/rocky_terra
 const groundDisplacementTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_disp_1k.jpg')
 
 
+
+
 groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
 // Ground Textures Setup: Tiling and Wrapping
@@ -120,6 +122,11 @@ towerRoofNormalTexture.repeat.set(0.8, 0.8);
 
 
 
+const bushColorTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_diff_1k.jpg')
+const bushArmTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_arm_1k.webp')
+const bushNormalTexture = textureLoader.load('/bush/leaves_forest_ground_1k/leaves_forest_ground_nor_gl_1k.jpg')
+bushColorTexture.colorSpace = THREE.SRGBColorSpace
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Chapel
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -138,7 +145,7 @@ const ground = new THREE.Mesh(
         displacementMap: groundDisplacementTexture,
         displacementScale: 0.3,
         displacementBias: - 0.2,
-        // color: new THREE.Color('#aaaaaa') 
+        color: '#aaaaaa',
     })
 )
 ground.rotation.x = - Math.PI / 2
@@ -180,7 +187,7 @@ const rightPanel = new THREE.Mesh(
         roughnessMap: roofArmTexture,
         // metalnessMap: roofSpecTexture, 
         normalMap: roofNormalTexture,
-        // bumpMap: roofBumpTexture,            // Bump map
+        // bumpMap: roofBumpTexture,          
         bumpScale: 0.2,  
   })
 )
@@ -308,24 +315,35 @@ chapel.add(door)
 
 
 // ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰
-const bushGeometry = new THREE.SphereGeometry(1, 16, 116)
-const bushMaterial = new THREE.MeshStandardMaterial()
+const bushGeometry = new THREE.SphereGeometry(1, 16, 16)
+const bushMaterial = new THREE.MeshStandardMaterial({
+    color: '#ccffcc', // Changed the texture color for bushes.
+    map: bushColorTexture,
+    aoMap: bushArmTexture,
+    roughnessMap: bushArmTexture,
+    metalnessMap: bushArmTexture,
+    normalMap: bushNormalTexture,
+})
 
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial)
 bush1.scale.set(0.5, 0.5, 0.5)
 bush1.position.set(0.8, 0.2, 3.2)
+bush1.rotation.x = - 0.75 // Rotated the sphere to hide visible texture imperfection issues on the surface.
 
 const bush2 = new THREE.Mesh(bushGeometry, bushMaterial)
 bush2.scale.set(0.25, 0.25, 0.25)
 bush2.position.set(1.4, 0.1, 3.1)
+bush2.rotation.x = - 0.75
 
 const bush3 = new THREE.Mesh(bushGeometry, bushMaterial)
 bush3.scale.set(0.4, 0.4, 0.4)
 bush3.position.set(-0.8, 0.1, 3.1)
+bush3.rotation.x = - 0.75
 
 const bush4 = new THREE.Mesh(bushGeometry, bushMaterial)
 bush4.scale.set(0.15, 0.15, 0.15)
 bush4.position.set(-1, 0.05, 3.5)
+bush4.rotation.x = - 0.75
 
 chapel.add(bush1, bush2, bush3, bush4)
 

@@ -75,6 +75,25 @@ const  towerNormalTexture = wallNormalTexture
 const  towerDisplacementTexture = wallDisplacementTexture
 
 
+// ☰☰☰☰☰☰ Triangle ☰☰☰☰☰☰
+const  triangleColorTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_diff_1k.jpg')
+const  triangleArmTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_arm_1k.jpg')
+const  triangleNormalTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_nor_gl_1k.jpg')
+const  triangleDisplacementTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_disp_1k.jpg')
+triangleColorTexture.colorSpace = THREE.SRGBColorSpace
+
+triangleColorTexture.wrapS = THREE.RepeatWrapping;
+triangleColorTexture.wrapT = THREE.RepeatWrapping;
+triangleColorTexture.repeat.set(0.3, 0.5); 
+
+triangleArmTexture.wrapS = THREE.RepeatWrapping;
+triangleArmTexture.wrapT = THREE.RepeatWrapping;
+triangleArmTexture.repeat.set(0.3, 0.5);
+
+triangleNormalTexture.wrapS = THREE.RepeatWrapping;
+triangleNormalTexture.wrapT = THREE.RepeatWrapping;
+triangleNormalTexture.repeat.set(0.3, 0.5);
+
 
 // ☰☰☰☰☰☰ Roof ☰☰☰☰☰☰
 const roofColorTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp')
@@ -136,7 +155,7 @@ scene.add(chapel)
 
 // ☰☰☰☰☰☰ Main walls ☰☰☰☰☰☰
 const mainWalls = new THREE.Mesh(
-    new THREE.BoxGeometry(4, 2.5, 5.5),
+    new THREE.BoxGeometry(4, 2.6, 5.5),
     new THREE.MeshStandardMaterial({
         map: wallColorTexture,
         aoMap: wallArmTexture,
@@ -145,7 +164,7 @@ const mainWalls = new THREE.Mesh(
         normalMap: wallNormalTexture,
     })
 )
-mainWalls.position.y = 2.5 / 2  // Raise walls so they sit on the ground
+mainWalls.position.y = 2.6 / 2  // Raise walls so they sit on the ground
 chapel.add(mainWalls)
 
 
@@ -197,12 +216,17 @@ triangleOutline.moveTo(-2.1, 0)  // Bottom-left corner (x, y)
 triangleOutline.lineTo(0, 2.1)  // Top peak 
 triangleOutline.lineTo(2.1, 0)   // Bottom-right corner 
 
-const fronttriangle = new THREE.Mesh(
-    new THREE.ShapeGeometry(triangleOutline), // Passing the gableOutlile to the geometry
-    new THREE.MeshStandardMaterial({
+const triangleGeometry = new THREE.ShapeGeometry(triangleOutline) // Passing the gableOutlile to the geometry
+const triangleMaterial = new THREE.MeshStandardMaterial({
     side: THREE.DoubleSide,
+     map: triangleColorTexture,
+        aoMap: triangleArmTexture,
+        roughnessMap: triangleArmTexture,
+        metalnessMap: triangleArmTexture,
+        normalMap: triangleNormalTexture,
+
     })
-)
+const fronttriangle = new THREE.Mesh(triangleGeometry, triangleMaterial)
 fronttriangle.position.set(0, 2.4, 2.76)
 
 const backtriangle = fronttriangle.clone()

@@ -29,28 +29,19 @@ const groundColorTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrai
 const groundArmTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_arm_1k.jpg')
 const groundNormalTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_nor_gl_1k.jpg')
 const groundDisplacementTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_disp_1k.jpg')
-
 groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
-// Ground Textures Setup: Tiling and Wrapping
-groundColorTexture.repeat.set(15, 12)
-groundColorTexture.wrapS = THREE.RepeatWrapping
-groundColorTexture.wrapT = THREE.RepeatWrapping
-
-groundArmTexture.repeat.set(15, 12)
-groundArmTexture.wrapS = THREE.RepeatWrapping
-groundArmTexture.wrapT = THREE.RepeatWrapping
-
-
-groundNormalTexture.repeat.set(15, 12)
-groundNormalTexture .wrapS = THREE.RepeatWrapping
-groundNormalTexture .wrapT = THREE.RepeatWrapping
-
-
-groundDisplacementTexture.repeat.set(15, 12)
-groundDisplacementTexture.wrapS = THREE.RepeatWrapping
-groundDisplacementTexture.wrapT = THREE.RepeatWrapping
-
+const groundTexturesRepeat = [
+    groundColorTexture, 
+    groundArmTexture, 
+    groundNormalTexture, 
+    groundDisplacementTexture
+]
+groundTexturesRepeat.forEach((texture) => {
+    texture.wrapS = THREE.RepeatWrapping
+    texture.wrapT = THREE.RepeatWrapping
+    texture.repeat.set(15, 12)
+})
 
 
 // ☰☰☰☰☰☰ Walls ☰☰☰☰☰☰
@@ -75,17 +66,16 @@ const  triangleNormalTexture = textureLoader.load('/wall/castle_brick_broken/cas
 const  triangleDisplacementTexture = textureLoader.load('/wall/castle_brick_broken/castle_brick_broken_06_disp_1k.jpg')
 triangleColorTexture.colorSpace = THREE.SRGBColorSpace
 
-triangleColorTexture.wrapS = THREE.RepeatWrapping;
-triangleColorTexture.wrapT = THREE.RepeatWrapping;
-triangleColorTexture.repeat.set(0.3, 0.5); 
-
-triangleArmTexture.wrapS = THREE.RepeatWrapping;
-triangleArmTexture.wrapT = THREE.RepeatWrapping;
-triangleArmTexture.repeat.set(0.3, 0.5);
-
-triangleNormalTexture.wrapS = THREE.RepeatWrapping;
-triangleNormalTexture.wrapT = THREE.RepeatWrapping;
-triangleNormalTexture.repeat.set(0.3, 0.5);
+const triangleTexturesRepeat = [
+    triangleColorTexture, 
+    triangleArmTexture, 
+    triangleNormalTexture, 
+]
+triangleTexturesRepeat.forEach((texture) => {
+    texture.wrapS = THREE.RepeatWrapping
+    texture.wrapT = THREE.RepeatWrapping
+    texture.repeat.set(0.3, 0.5)
+})
 
 
 // ☰☰☰☰☰☰ Roof ☰☰☰☰☰☰
@@ -99,20 +89,18 @@ roofColorTexture.colorSpace = THREE.SRGBColorSpace
 const towerRoofColorTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_diff_1k.webp')
 const towerRoofArmTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_arm_1k.webp')
 const towerRoofNormalTexture = textureLoader.load('/roof/roof_slates_02_1k/roof_slates_02_nor_gl_1k.webp')
-
 towerRoofColorTexture.colorSpace = THREE.SRGBColorSpace
 
-towerRoofColorTexture.wrapS = THREE.RepeatWrapping
-towerRoofColorTexture.wrapT = THREE.RepeatWrapping
-towerRoofColorTexture.repeat.set(0.8, 0.8)
-
-towerRoofArmTexture.wrapS = THREE.RepeatWrapping
-towerRoofArmTexture.wrapT = THREE.RepeatWrapping
-towerRoofArmTexture.repeat.set(0.8, 0.8)
-
-towerRoofNormalTexture.wrapS = THREE.RepeatWrapping
-towerRoofNormalTexture.wrapT = THREE.RepeatWrapping
-towerRoofNormalTexture.repeat.set(0.8, 0.8)
+const towerRoofTexturesRepeat = [
+    towerRoofColorTexture, 
+    towerRoofArmTexture, 
+    towerRoofNormalTexture, 
+]
+triangleTexturesRepeat.forEach((texture) => {
+    texture.wrapS = THREE.RepeatWrapping
+    texture.wrapT = THREE.RepeatWrapping
+    texture.repeat.set(0.8, 0.8)
+})
 
 
 // ☰☰☰☰☰☰ Bush ☰☰☰☰☰☰
@@ -126,15 +114,13 @@ bushColorTexture.colorSpace = THREE.SRGBColorSpace
 const graveColorTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.jpg')
 const graveArmTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.jpg')
 const graveNormalTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.jpg')
-
 graveColorTexture.colorSpace = THREE.SRGBColorSpace
 
 // Don’t need WrapS and wrapT when repeat values are less than 1 
-graveColorTexture.repeat.set(0.3, 0.4) // Asking the texture to repeat 0.3 times horizontally (U) and 0.4 times vertically (V)
+graveColorTexture.repeat.set(0.3, 0.4) 
 graveArmTexture.repeat.set(0.3, 0.4)
 graveNormalTexture.repeat.set(0.3, 0.4)
 graveColorTexture.colorSpace = THREE.SRGBColorSpace
-
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -166,7 +152,6 @@ loader.load('./models/door.glb', (gltf) => {
     doorModel.position.x = -1.7
     chapel.add(doorModel)
 })
-
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

@@ -143,28 +143,30 @@ graveColorTexture.colorSpace = THREE.SRGBColorSpace
 const loader = new GLTFLoader()
 
 // ☰☰☰☰☰☰ Door ☰☰☰☰☰☰
+
 loader.load('./models/door.glb', (gltf) => {
-const doorModel = gltf.scene
+    const doorModel = gltf.scene
 
-// Scale the model before creating its bounding box so the box matches the scaled size. 
-doorModel.scale.set(0.8, 0.8, 0.8)
+    // Scale the model before creating its bounding box so the box matches the scaled size. 
+    doorModel.scale.set(0.8, 0.8, 0.8)
 
-// .Box3() creates an empty 3D bounding box
-// .setFromObject(doorModel) calculates the bounding box that tightly wraps all visible geometry inside doorModel
-const box = new THREE.Box3().setFromObject(doorModel)
-const center = new THREE.Vector3() // Creates a Vector3 to hold the center of the model (x, y, z)
-const size = new THREE.Vector3() // Creates a Vector3 to hold the size of the model (width, height, depth)
+    // .Box3() creates an empty 3D bounding box
+    // .setFromObject(doorModel) calculates the bounding box that tightly wraps all visible geometry inside doorModel
+    const box = new THREE.Box3().setFromObject(doorModel)
+    const center = new THREE.Vector3() // Creates a Vector3 to hold the center of the model (x, y, z)
+    const size = new THREE.Vector3() // Creates a Vector3 to hold the size of the model (width, height, depth)
 
-box.getCenter(center)  // Get the center of the model
-box.getSize(size)   // Get the full width/height/depth
-doorModel.position.sub(center)
+    box.getCenter(center)  // Get the center of the model
+    box.getSize(size)   // Get the full width/height/depth
+    doorModel.position.sub(center)
 
-doorModel.rotation.y = -Math.PI / 2
-doorModel.position.y += size.y / 2 // Lifts up the door so the bottom is on the ground
-doorModel.position.z = 5.9
-doorModel.position.x = -1.7
-chapel.add(doorModel)
+    doorModel.rotation.y = -Math.PI / 2
+    doorModel.position.y += size.y / 2 // Lifts up the door so the bottom is on the ground
+    doorModel.position.z = 5.9
+    doorModel.position.x = -1.7
+    chapel.add(doorModel)
 })
+
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -202,7 +204,7 @@ scene.add(chapel)
 
 // ☰☰☰☰☰☰ Main walls ☰☰☰☰☰☰
 const mainWalls = new THREE.Mesh(
-    new THREE.BoxGeometry(4, 2.6, 5.5),
+    new THREE.BoxGeometry(4.1, 3, 5.5),
     new THREE.MeshStandardMaterial({
         map: wallColorTexture,
         aoMap: wallArmTexture,
@@ -220,7 +222,7 @@ const mainRoofGroup = new THREE.Group()
 
 // Right panel
 const rightPanel = new THREE.Mesh(
-  new THREE.BoxGeometry(3, 0.1, 5.8),
+  new THREE.BoxGeometry(2.65, 0.1, 5.8),
   new THREE.MeshStandardMaterial({ 
         map: roofColorTexture,
         aoMap: roofArmTexture,
@@ -229,6 +231,7 @@ const rightPanel = new THREE.Mesh(
   })
 )
 
+
 roofColorTexture.center.set(0.5, 0.5);
 roofColorTexture.rotation = Math.PI / 2;
 
@@ -236,17 +239,16 @@ roofArmTexture.center.set(0.5, 0.5);
 roofArmTexture.rotation = Math.PI / 2;
 
 
-rightPanel.rotation.z = -Math.PI / 4
+rightPanel.rotation.z = -Math.PI / 5
 rightPanel.position.x = 1.05
 rightPanel.position.y = 3.5 
 
 
 // Left panel
 const leftPanel = rightPanel.clone()
-leftPanel.rotation.z = Math.PI / 4
+leftPanel.rotation.z = Math.PI / 5
 leftPanel.position.x = -1.05
 leftPanel.position.y = 3.5
-
 
 
 mainRoofGroup.add(rightPanel, leftPanel) // Adds the panels to the mainRoofGroup
@@ -258,7 +260,7 @@ const triangleGroup = new THREE.Group()
 
 const triangleOutline = new THREE.Shape()
 triangleOutline.moveTo(-2.1, 0)  // Bottom-left corner (x, y)
-triangleOutline.lineTo(0, 2.1)  // Top peak 
+triangleOutline.lineTo(0, 1.5)  // Top peak 
 triangleOutline.lineTo(2.1, 0)   // Bottom-right corner 
 
 const triangleGeometry = new THREE.ShapeGeometry(triangleOutline) // Passing the gableOutlile to the geometry
@@ -271,10 +273,10 @@ const triangleMaterial = new THREE.MeshStandardMaterial({
         normalMap: triangleNormalTexture,
     })
 const fronttriangle = new THREE.Mesh(triangleGeometry, triangleMaterial)
-fronttriangle.position.set(0, 2.4, 2.76)
+fronttriangle.position.set(0, 2.7, 2.76)
 
 const backtriangle = fronttriangle.clone()
-backtriangle.position.set(0, 2.4, -2.76)
+backtriangle.position.set(0, 2.7, -2.76)
 
 triangleGroup.add(fronttriangle, backtriangle)
 chapel.add(triangleGroup)
@@ -282,9 +284,11 @@ chapel.add(triangleGroup)
 
 
 // ☰☰☰☰☰☰ Tower ☰☰☰☰☰☰
+
+// Tower walls
 const towerGroup = new THREE.Group()
 const tower = new THREE.Mesh(
-  new THREE.BoxGeometry(1.3, 2, 1),
+  new THREE.BoxGeometry(1.3, 1.5, 1),
   new THREE.MeshStandardMaterial({
      map: towerColorTexture,
      aoMap: towerArmTexture,
@@ -294,7 +298,7 @@ const tower = new THREE.Mesh(
   })
 )
 tower.position.z = 1.7
-tower.position.y = 8.2 / 2 // Raise to sit on the ground (centered on height)
+tower.position.y = 4.4 
 
 
 // Tower roof
@@ -308,7 +312,7 @@ const towerRoof = new THREE.Mesh(
    })
 )
 towerRoof.rotation.y = Math.PI / 4 // Rotate so flat sides align with box walls
-towerRoof.position.y = 5 + 1.2 / 2 // Tower height + half cone height
+towerRoof.position.y = 5.1 + 1 / 2 // Tower height + half cone height
 towerRoof.position.z = 1.7
 
 towerGroup.add(tower, towerRoof) 

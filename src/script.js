@@ -145,13 +145,27 @@ const loader = new GLTFLoader()
 // ☰☰☰☰☰☰ Door ☰☰☰☰☰☰
 loader.load('./models/door.glb', (gltf) => {
 const doorModel = gltf.scene
-// No need to create geometry — it's already inside gltf.scene
-doorModel.scale.set(0.8, 0.8, 0.8)
-doorModel.rotation.y = -Math.PI / 2
-doorModel.position.set(-1.7, -3.3, 5.9)
 
+// Scale the model before creating its bounding box so the box matches the scaled size. 
+doorModel.scale.set(0.8, 0.8, 0.8)
+
+// .Box3() creates an empty 3D bounding box
+// .setFromObject(doorModel) calculates the bounding box that tightly wraps all visible geometry inside doorModel
+const box = new THREE.Box3().setFromObject(doorModel)
+const center = new THREE.Vector3() // Creates a Vector3 to hold the center of the model (x, y, z)
+const size = new THREE.Vector3() // Creates a Vector3 to hold the size of the model (width, height, depth)
+
+box.getCenter(center)  // Get the center of the model
+box.getSize(size)   // Get the full width/height/depth
+doorModel.position.sub(center)
+
+doorModel.rotation.y = -Math.PI / 2
+doorModel.position.y += size.y / 2 // Lifts up the door so the bottom is on the ground
+doorModel.position.z = 5.9
+doorModel.position.x = -1.7
 chapel.add(doorModel)
 })
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Chapel
@@ -320,6 +334,8 @@ horizontalBar.position.z = 1.7
 
 crossGroup.add(verticalBar, horizontalBar)
 chapel.add(crossGroup)
+
+
 
 
 // ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰

@@ -74,7 +74,7 @@ const triangleTexturesRepeat = [
 triangleTexturesRepeat.forEach((texture) => {
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set(0.3, 0.5)
+    texture.repeat.set(0.3, 0.3)
 })
 
 
@@ -96,7 +96,7 @@ const towerRoofTexturesRepeat = [
     towerRoofArmTexture, 
     towerRoofNormalTexture, 
 ]
-triangleTexturesRepeat.forEach((texture) => {
+towerRoofTexturesRepeat.forEach((texture) => {
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
     texture.repeat.set(0.8, 0.8)
@@ -152,6 +152,30 @@ loader.load('./models/door.glb', (gltf) => {
     doorModel.position.x = -1.7
     chapel.add(doorModel)
 })
+
+
+
+loader.load('./models/window.glb', (gltf) => {
+  const windowModel = gltf.scene
+  windowModel.scale.set(0.010, 0.010, 0.030);
+
+  // Get bounding box
+  const box = new THREE.Box3().setFromObject(windowModel)
+  const center = new THREE.Vector3()
+  const size = new THREE.Vector3()
+  box.getCenter(center)
+  box.getSize(size)
+
+  // Center window model
+  windowModel.position.sub(center)
+
+  // Place window
+  windowModel.position.y = 4.7
+  windowModel.position.z = 2.2
+
+  chapel.add(windowModel);
+})
+
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -326,7 +350,6 @@ chapel.add(crossGroup)
 
 
 
-
 // ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16)
 const bushMaterial = new THREE.MeshStandardMaterial({
@@ -405,10 +428,10 @@ for (let i = 0; i < 30; i ++){
 //                           Lights
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 // ☰☰☰☰☰☰ Ambient light ☰☰☰☰☰☰
-const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
+const ambientLight = new THREE.AmbientLight('#ffffff', 0.800)
 scene.add(ambientLight)
 
-// Directional light
+// ☰☰☰☰☰☰ Directional light ☰☰☰☰☰☰
 const directionalLight = new THREE.DirectionalLight('#ffffff', 1.5)
 directionalLight.position.set(3, 2, -8)
 scene.add(directionalLight)

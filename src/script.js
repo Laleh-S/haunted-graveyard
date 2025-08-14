@@ -116,11 +116,13 @@ const graveArmTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plast
 const graveNormalTexture = textureLoader.load('/grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.jpg')
 graveColorTexture.colorSpace = THREE.SRGBColorSpace
 
-// Don’t need WrapS and wrapT when repeat values are less than 1 
-graveColorTexture.repeat.set(0.3, 0.4) 
-graveArmTexture.repeat.set(0.3, 0.4)
-graveNormalTexture.repeat.set(0.3, 0.4)
+
+graveColorTexture.repeat.set(5, 5) 
+graveArmTexture.repeat.set(5, 5)
+graveNormalTexture.repeat.set(5, 5)
 graveColorTexture.colorSpace = THREE.SRGBColorSpace
+
+
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -129,7 +131,6 @@ graveColorTexture.colorSpace = THREE.SRGBColorSpace
 const loader = new GLTFLoader()
 
 // ☰☰☰☰☰☰ Door ☰☰☰☰☰☰
-
 loader.load('./models/door.glb', (gltf) => {
     const doorModel = gltf.scene
 
@@ -154,27 +155,30 @@ loader.load('./models/door.glb', (gltf) => {
 })
 
 
+// ☰☰☰☰☰☰ Tower window ☰☰☰☰☰☰
+const towerWindowGroup = new THREE.Group()
 
-loader.load('./models/window.glb', (gltf) => {
-  const windowModel = gltf.scene
-  windowModel.scale.set(0.010, 0.010, 0.030);
+//  ---- Window model ----
+loader.load('./models/towerWindow.glb', (gltf) => {
+    const towerWindowModel = gltf.scene
+    towerWindowModel.scale.set(0.011, 0.011, 0.03)
 
-  // Get bounding box
-  const box = new THREE.Box3().setFromObject(windowModel)
-  const center = new THREE.Vector3()
-  const size = new THREE.Vector3()
-  box.getCenter(center)
-  box.getSize(size)
+    // ---- Window glow ----
+    const glow = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.33, 0.33, 0.05, 32), // XradiusTop, ZradiusBottom, height, radialSegments
+        new THREE.MeshStandardMaterial({ color: '#FFC000'})
+    )
+    glow.rotation.x = Math.PI / 2
+    towerWindowGroup.position.z = 5
 
-  // Center window model
-  windowModel.position.sub(center)
+    towerWindowGroup.position.y = 4.7
+    towerWindowGroup.position.z = 2.2
 
-  // Place window
-  windowModel.position.y = 4.7
-  windowModel.position.z = 2.2
-
-  chapel.add(windowModel);
+    towerWindowGroup.add(towerWindowModel, glow)
+    chapel.add(towerWindowGroup)
 })
+
+
 
 
 
@@ -349,7 +353,6 @@ crossGroup.add(verticalBar, horizontalBar)
 chapel.add(crossGroup)
 
 
-
 // ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16)
 const bushMaterial = new THREE.MeshStandardMaterial({
@@ -432,7 +435,7 @@ const ambientLight = new THREE.AmbientLight('#ffffff', 0.800)
 scene.add(ambientLight)
 
 // ☰☰☰☰☰☰ Directional light ☰☰☰☰☰☰
-const directionalLight = new THREE.DirectionalLight('#ffffff', 1.5)
+const directionalLight = new THREE.DirectionalLight('#ffffff', 1)
 directionalLight.position.set(3, 2, -8)
 scene.add(directionalLight)
 

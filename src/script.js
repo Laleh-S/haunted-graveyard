@@ -152,6 +152,7 @@ loader.load('./models/door.glb', (gltf) => {
     doorModel.position.z = 5.9
     doorModel.position.x = -1.7
     chapel.add(doorModel)
+
 })
 
 
@@ -165,7 +166,7 @@ loader.load('./models/towerWindow.glb', (gltf) => {
 
     // ---- Window glow ----
     const glow = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.33, 0.33, 0.05, 32), // XradiusTop, ZradiusBottom, height, radialSegments
+        new THREE.CylinderGeometry(0.33, 0.33, 0.05, 32), // radiusTop, radiusBottom, height, radialSegments
         new THREE.MeshStandardMaterial({ color: '#FFC000'})
     )
     glow.rotation.x = Math.PI / 2
@@ -173,7 +174,7 @@ loader.load('./models/towerWindow.glb', (gltf) => {
 
     towerWindowGroup.position.y = 4.7
     towerWindowGroup.position.z = 2.2
-
+    
     towerWindowGroup.add(towerWindowModel, glow)
     chapel.add(towerWindowGroup)
 })
@@ -210,6 +211,7 @@ scene.add(ground)
 gui.add(ground.material, 'displacementScale').min(0).max(1).step(0.001).name('Displacement Scale')
 gui.add(ground.material, 'displacementBias').min(-1).max(1).step(0.001).name('Ground Displacement')
 
+
 // ☰☰☰☰☰☰ Chapel container ☰☰☰☰☰☰
 const chapel = new THREE.Group()
 scene.add(chapel)
@@ -233,39 +235,39 @@ chapel.add(mainWalls)
 // ☰☰☰☰☰☰ Main roof ☰☰☰☰☰☰
 const mainRoofGroup = new THREE.Group()
 
-// Right panel
-const rightPanel = new THREE.Mesh(
-  new THREE.BoxGeometry(2.65, 0.1, 5.8),
-  new THREE.MeshStandardMaterial({ 
+// Roof geometry and material (shared by both panels)
+const panelGeometry = new THREE.BoxGeometry(2.65, 0.1, 5.8)
+const panelMaterial = new THREE.MeshStandardMaterial({ 
         map: roofColorTexture,
         aoMap: roofArmTexture,
         roughnessMap: roofArmTexture,
         normalMap: roofNormalTexture,  
-  })
-)
+})
 
+// Texture rotation to align with the roof
+roofColorTexture.center.set(0.5, 0.5)
+roofColorTexture.rotation = Math.PI / 2
 
-roofColorTexture.center.set(0.5, 0.5);
-roofColorTexture.rotation = Math.PI / 2;
+roofArmTexture.center.set(0.5, 0.5)
+roofArmTexture.rotation = Math.PI / 2
 
-roofArmTexture.center.set(0.5, 0.5);
-roofArmTexture.rotation = Math.PI / 2;
-
-
+// Right roof panel
+const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial)
 rightPanel.rotation.z = -Math.PI / 5
 rightPanel.position.x = 1.05
 rightPanel.position.y = 3.5 
 
 
-// Left panel
-const leftPanel = rightPanel.clone()
+// Left roof panel (mirrored)
+const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial)
 leftPanel.rotation.z = Math.PI / 5
 leftPanel.position.x = -1.05
 leftPanel.position.y = 3.5
 
 
-mainRoofGroup.add(rightPanel, leftPanel) // Adds the panels to the mainRoofGroup
-chapel.add(mainRoofGroup) // Adds the mainRoofGroup to the chapel 
+mainRoofGroup.add(rightPanel, leftPanel) 
+chapel.add(mainRoofGroup) 
+
 
 
 // ☰☰☰☰☰☰ Traingle shape gap between roof panels ☰☰☰☰☰☰
@@ -426,7 +428,6 @@ for (let i = 0; i < 30; i ++){
 }
 
 
-
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -484,7 +485,7 @@ controls.enableDamping = true
 // controls.update()
 
 // ☰☰☰☰☰☰ Camera helper ☰☰☰☰☰☰
-const cameraHelper = new THREE.CameraHelper(camera);
+const cameraHelper = new THREE.CameraHelper(camera)
 scene.add(cameraHelper)
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

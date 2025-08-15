@@ -167,7 +167,10 @@ loader.load('./models/towerWindow.glb', (gltf) => {
     // ---- Window glow ----
     const glow = new THREE.Mesh(
         new THREE.CylinderGeometry(0.33, 0.33, 0.05, 32), // radiusTop, radiusBottom, height, radialSegments
-        new THREE.MeshStandardMaterial({ color: '#FFC000'})
+        new THREE.MeshStandardMaterial({ 
+            color: '#FFC000',
+            emissive: '#E6A800',
+        })    
     )
     glow.rotation.x = Math.PI / 2
     towerWindowGroup.position.z = 5
@@ -229,7 +232,7 @@ const mainWalls = new THREE.Mesh(
     })
 )
 mainWalls.position.y = 2.6 / 2  // Raise walls so they sit on the ground
-chapel.add(mainWalls)
+// chapel.add(mainWalls)
 
 
 // ☰☰☰☰☰☰ Main roof ☰☰☰☰☰☰
@@ -334,11 +337,12 @@ towerGroup.add(tower, towerRoof)
 chapel.add(towerGroup)
 
 
+
 // ☰☰☰☰☰☰ Cross ☰☰☰☰☰☰
 const crossGroup = new THREE.Group()
 
 const barGeometry = new THREE.BoxGeometry(0.05, 0.7, 0.05)
-const barMaterial = new THREE.MeshStandardMaterial({})
+const barMaterial = new THREE.MeshStandardMaterial({ })
 
 // Vertical bar
 const verticalBar = new THREE.Mesh(barGeometry, barMaterial)

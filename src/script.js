@@ -169,7 +169,7 @@ loader.load('./models/towerWindow.glb', (gltf) => {
         new THREE.CylinderGeometry(0.33, 0.33, 0.05, 32), // radiusTop, radiusBottom, height, radialSegments
         new THREE.MeshStandardMaterial({ 
             color: '#FFC000',
-            emissive: '#E6A800',
+            emissive: '#ff7d46',
         })    
     )
     glow.rotation.x = Math.PI / 2
@@ -232,7 +232,7 @@ const mainWalls = new THREE.Mesh(
     })
 )
 mainWalls.position.y = 2.6 / 2  // Raise walls so they sit on the ground
-// chapel.add(mainWalls)
+chapel.add(mainWalls)
 
 
 // ☰☰☰☰☰☰ Main roof ☰☰☰☰☰☰
@@ -359,6 +359,28 @@ crossGroup.add(verticalBar, horizontalBar)
 chapel.add(crossGroup)
 
 
+// ☰☰☰☰☰☰ Door Roof canopy ☰☰☰☰☰☰
+const doorcanopyGroup = new THREE.Group()
+
+const canopyGeometry = new THREE.BoxGeometry(1.2, 0.1, 0.6)
+const canopyMaterial = new THREE.MeshStandardMaterial({
+    color: '#31312f' 
+})
+const canopyRightPanel = new THREE.Mesh(canopyGeometry, canopyMaterial)
+canopyRightPanel.rotation.z = - Math.PI / 6
+canopyRightPanel.position.set(0.5, 0.5, 0) 
+
+const canopyLeftPanel = new THREE.Mesh(canopyGeometry, canopyMaterial)
+canopyLeftPanel.rotation.z = Math.PI / 6
+canopyLeftPanel.position.set(-0.5, 0.5, 0)
+
+doorcanopyGroup.position.set(0, 1.9, 2.8)
+
+doorcanopyGroup.add(canopyRightPanel, canopyLeftPanel)
+chapel.add(doorcanopyGroup)
+
+
+
 // ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16)
 const bushMaterial = new THREE.MeshStandardMaterial({
@@ -443,7 +465,6 @@ scene.add(ambientLight)
 const directionalLight = new THREE.DirectionalLight('#ffffff', 1)
 directionalLight.position.set(3, 2, -8)
 scene.add(directionalLight)
-
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Sizes

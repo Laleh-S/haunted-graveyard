@@ -28,7 +28,7 @@ const groundAlphaTexture = textureLoader.load('/floor/alpha.jpg')
 const groundColorTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp')
 const groundArmTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp')
 const groundNormalTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp')
-const groundDisplacementTexture = textureLoader.load('static/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp')
+const groundDisplacementTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp')
 groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
 const groundTexturesRepeat = [
@@ -42,6 +42,7 @@ groundTexturesRepeat.forEach((texture) => {
     texture.wrapT = THREE.RepeatWrapping
     texture.repeat.set(8, 8)
 })
+
 
 
 // ☰☰☰☰☰☰ Walls ☰☰☰☰☰☰
@@ -135,7 +136,7 @@ loader.load('./models/door.glb', (gltf) => {
     const doorModel = gltf.scene
 
     // Scale the model before creating its bounding box so the box matches the scaled size. 
-    doorModel.scale.set(0.8, 0.8, 0.8)
+    doorModel.scale.set(0.8, 0.9, 0.8)
 
     // .Box3() creates an empty 3D bounding box
     // .setFromObject(doorModel) calculates the bounding box that tightly wraps all visible geometry inside doorModel
@@ -148,7 +149,7 @@ loader.load('./models/door.glb', (gltf) => {
     doorModel.position.sub(center)
 
     doorModel.rotation.y = -Math.PI / 2
-    doorModel.position.y += size.y / 2  // Lifts up the door so the bottom is on the ground
+    doorModel.position.y += (size.y / 2) - 0.2 // Lifts up the door so the bottom is on the ground
     doorModel.position.z = 5.9
     doorModel.position.x = -1.7
     chapel.add(doorModel)
@@ -199,7 +200,7 @@ const ground = new THREE.Mesh(
         metalnessMap: groundArmTexture,
         normalMap: groundNormalTexture,
         displacementMap: groundDisplacementTexture,
-        displacementScale: 0.3,
+        displacementScale: 0.1,
         displacementBias: - 0.2,
         color: '#aaaaaa',
     })
@@ -462,6 +463,12 @@ scene.add(ambientLight)
 const directionalLight = new THREE.DirectionalLight('#ffffff', 1)
 directionalLight.position.set(3, 2, -8)
 scene.add(directionalLight)
+
+// Door Light
+const doorLight = new THREE.PointLight('#ff7d46',  0.8, 2) 
+doorLight.decay = 3
+doorLight.position.set(0, 2.4, 2.8) 
+chapel.add(doorLight)
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Sizes

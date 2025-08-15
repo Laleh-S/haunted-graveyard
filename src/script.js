@@ -25,10 +25,10 @@ const textureLoader = new THREE.TextureLoader()
 
 // ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
 const groundAlphaTexture = textureLoader.load('/floor/alpha.jpg')
-const groundColorTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_diff_1k.jpg')
-const groundArmTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_arm_1k.jpg')
-const groundNormalTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_nor_gl_1k.jpg')
-const groundDisplacementTexture = textureLoader.load('/floor/rocky_terrain/rocky_terrain_disp_1k.jpg')
+const groundColorTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp')
+const groundArmTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp')
+const groundNormalTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp')
+const groundDisplacementTexture = textureLoader.load('static/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp')
 groundColorTexture.colorSpace = THREE.SRGBColorSpace
 
 const groundTexturesRepeat = [
@@ -40,7 +40,7 @@ const groundTexturesRepeat = [
 groundTexturesRepeat.forEach((texture) => {
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set(15, 12)
+    texture.repeat.set(8, 8)
 })
 
 
@@ -148,7 +148,7 @@ loader.load('./models/door.glb', (gltf) => {
     doorModel.position.sub(center)
 
     doorModel.rotation.y = -Math.PI / 2
-    doorModel.position.y += size.y / 2 // Lifts up the door so the bottom is on the ground
+    doorModel.position.y += size.y / 2  // Lifts up the door so the bottom is on the ground
     doorModel.position.z = 5.9
     doorModel.position.x = -1.7
     chapel.add(doorModel)
@@ -181,9 +181,6 @@ loader.load('./models/towerWindow.glb', (gltf) => {
     towerWindowGroup.add(towerWindowModel, glow)
     chapel.add(towerWindowGroup)
 })
-
-
-
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

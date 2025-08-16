@@ -465,10 +465,15 @@ directionalLight.position.set(3, 2, -8)
 scene.add(directionalLight)
 
 // Door Light
-const doorLight = new THREE.PointLight('#ff7d46',  0.8, 2) 
+const doorLight = new THREE.PointLight('#ffaa00', 3, 7)
 doorLight.decay = 3
-doorLight.position.set(0, 2.4, 2.8) 
+doorLight.position.set(0, 2.4, 2.8)
 chapel.add(doorLight)
+
+const doorLightFolder = gui.addFolder( 'Door Light' )
+doorLightFolder.addColor(doorLight, 'color').min(0).max(3).step(0.001).name('Door Light Color')
+doorLightFolder.add(doorLight, 'intensity').min(0.2).max(3).step(0.001).name('Door Light Intensity')
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Sizes

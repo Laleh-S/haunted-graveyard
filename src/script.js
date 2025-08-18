@@ -473,6 +473,19 @@ doorLightFolder.addColor(doorLight, 'color').min(0).max(3).step(0.001).name('Doo
 doorLightFolder.add(doorLight, 'intensity').min(0.2).max(3).step(0.001).name('Door Light Intensity')
 
 
+
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+//                           Ghost
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+const ghost1 = new THREE.PointLight('#8800ff', 6)
+const ghost2 = new THREE.PointLight('#ff0088', 6)
+const ghost3 = new THREE.PointLight('#00ffff', 6)
+scene.add(ghost1, ghost2, ghost3)
+
+
+
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Sizes
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

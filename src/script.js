@@ -118,11 +118,9 @@ const graveNormalTexture = textureLoader.load('/grave/plastered_stone_wall_1k/pl
 graveColorTexture.colorSpace = THREE.SRGBColorSpace
 
 
-graveColorTexture.repeat.set(5, 5) 
-graveArmTexture.repeat.set(5, 5)
-graveNormalTexture.repeat.set(5, 5)
-graveColorTexture.colorSpace = THREE.SRGBColorSpace
-
+graveColorTexture.repeat.set(0.4, 0.5) // Asking the texture to repeat 0.3 times horizontally (U) and 0.4 times vertically (V)
+graveArmTexture.repeat.set(0.4, 0.5)
+graveNormalTexture.repeat.set(0.4, 0.5)
 
 
 
@@ -360,7 +358,7 @@ chapel.add(crossGroup)
 // ☰☰☰☰☰☰ Door Roof canopy ☰☰☰☰☰☰
 const doorcanopyGroup = new THREE.Group()
 
-const canopyGeometry = new THREE.BoxGeometry(1.2, 0.1, 0.6)
+const canopyGeometry = new THREE.BoxGeometry(1.2, 0.1, 1)
 const canopyMaterial = new THREE.MeshStandardMaterial({
     color: '#31312f' 
 })
@@ -372,7 +370,7 @@ const canopyLeftPanel = new THREE.Mesh(canopyGeometry, canopyMaterial)
 canopyLeftPanel.rotation.z = Math.PI / 6
 canopyLeftPanel.position.set(-0.5, 0.5, 0)
 
-doorcanopyGroup.position.set(0, 1.9, 2.8)
+doorcanopyGroup.position.set(0, 2.1, 2.8)
 
 doorcanopyGroup.add(canopyRightPanel, canopyLeftPanel)
 chapel.add(doorcanopyGroup)
@@ -456,7 +454,8 @@ for (let i = 0; i < 30; i ++){
 //                           Lights
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 // ☰☰☰☰☰☰ Ambient light ☰☰☰☰☰☰
-const ambientLight = new THREE.AmbientLight('#ffffff', 0.800)
+// const ambientLight = new THREE.AmbientLight('#ffffff', 0.275)
+const ambientLight = new THREE.AmbientLight('#ffffff', 3)
 scene.add(ambientLight)
 
 // ☰☰☰☰☰☰ Directional light ☰☰☰☰☰☰
@@ -465,14 +464,16 @@ directionalLight.position.set(3, 2, -8)
 scene.add(directionalLight)
 
 // Door Light
-const doorLight = new THREE.PointLight('#ffaa00', 3, 7)
+const doorLight = new THREE.PointLight('#ffaa00', 3)
 doorLight.decay = 3
-doorLight.position.set(0, 2.4, 2.8)
+doorLight.position.set(0, 2.2, 3.2)
 chapel.add(doorLight)
 
 const doorLightFolder = gui.addFolder( 'Door Light' )
 doorLightFolder.addColor(doorLight, 'color').min(0).max(3).step(0.001).name('Door Light Color')
 doorLightFolder.add(doorLight, 'intensity').min(0.2).max(3).step(0.001).name('Door Light Intensity')
+
+
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

@@ -480,9 +480,8 @@ doorLightFolder.add(doorLight, 'intensity').min(0.2).max(3).step(0.001).name('Do
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 const ghost1 = new THREE.PointLight('#8800ff', 6)
 const ghost2 = new THREE.PointLight('#ff0088', 6)
-const ghost3 = new THREE.PointLight('#00ffff', 6)
+const ghost3 = new THREE.PointLight('#ff0000', 6)
 scene.add(ghost1, ghost2, ghost3)
-
 
 
 
@@ -553,6 +552,24 @@ const tick = () =>
     // ☰☰☰☰☰☰  Timer ☰☰☰☰☰☰  
     timer.update()
     const elapsedTime = timer.getElapsed()
+
+
+    // ☰☰☰☰☰☰  Ghost ☰☰☰☰☰☰  
+    const ghost1Angle = elapsedTime * 0.5
+    ghost1.position.x = Math.cos(ghost1Angle) * 4
+    ghost1.position.z = Math.sin(ghost1Angle) * 4
+    ghost1.position.y = Math.sin(ghost1Angle) * Math.sin(ghost1Angle * 2.34) * Math.sin(ghost1Angle * 3.45)
+
+    const ghost2Angle = - elapsedTime * 0.4
+    ghost2.position.x = Math.cos(ghost2Angle) * 5
+    ghost2.position.z = Math.sin(ghost2Angle) * 5
+    ghost2.position.y = Math.sin(ghost2Angle) * Math.sin(ghost2Angle * 2.34) * Math.sin(ghost2Angle * 3.45)
+
+    const ghost3Angle = elapsedTime * 0.25
+    ghost3.position.x = Math.cos(ghost3Angle) * 6
+    ghost3.position.z = Math.sin(ghost3Angle) * 6
+    ghost3.position.y = Math.sin(ghost3Angle) * Math.sin(ghost3Angle * 2.34) * Math.sin(ghost3Angle * 3.45)
+    
 
     // ☰☰☰☰☰☰ Update controls ☰☰☰☰☰☰
     controls.update()

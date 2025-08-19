@@ -211,10 +211,10 @@ gui.add(ground.material, 'displacementScale').min(0).max(1).step(0.001).name('Di
 gui.add(ground.material, 'displacementBias').min(-1).max(1).step(0.001).name('Ground Displacement')
 
 
+
 // ☰☰☰☰☰☰ Chapel container ☰☰☰☰☰☰
 const chapel = new THREE.Group()
 scene.add(chapel)
-
 
 // ☰☰☰☰☰☰ Main walls ☰☰☰☰☰☰
 const mainWalls = new THREE.Mesh(
@@ -242,7 +242,6 @@ const panelMaterial = new THREE.MeshStandardMaterial({
         roughnessMap: roofArmTexture,
         normalMap: roofNormalTexture,  
 })
-
 // Texture rotation to align with the roof
 roofColorTexture.center.set(0.5, 0.5)
 roofColorTexture.rotation = Math.PI / 2
@@ -263,13 +262,12 @@ leftPanel.rotation.z = Math.PI / 5
 leftPanel.position.x = -1.05
 leftPanel.position.y = 3.5
 
-
 mainRoofGroup.add(rightPanel, leftPanel) 
 chapel.add(mainRoofGroup) 
 
 
 
-// ☰☰☰☰☰☰ Traingle shape gap between roof panels ☰☰☰☰☰☰
+// ☰☰☰☰☰☰ Traingles between the roof panels ☰☰☰☰☰☰
 const triangleGroup = new THREE.Group()
 
 const triangleOutline = new THREE.Shape()
@@ -298,10 +296,9 @@ chapel.add(triangleGroup)
 
 
 // ☰☰☰☰☰☰ Tower ☰☰☰☰☰☰
-
 // Tower walls
 const towerGroup = new THREE.Group()
-const tower = new THREE.Mesh(
+const towerWalls = new THREE.Mesh(
   new THREE.BoxGeometry(1.3, 1.5, 1),
   new THREE.MeshStandardMaterial({
      map: towerColorTexture,
@@ -311,8 +308,8 @@ const tower = new THREE.Mesh(
         normalMap: towerNormalTexture,
   })
 )
-tower.position.z = 1.7
-tower.position.y = 4.4 
+towerWalls.position.z = 1.7
+towerWalls.position.y = 4.4 
 
 
 // Tower roof
@@ -329,7 +326,7 @@ towerRoof.rotation.y = Math.PI / 4 // Rotate so flat sides align with box walls
 towerRoof.position.y = 5.1 + 1 / 2 // Tower height + half cone height
 towerRoof.position.z = 1.7
 
-towerGroup.add(tower, towerRoof) 
+towerGroup.add(towerWalls, towerRoof) 
 chapel.add(towerGroup)
 
 
@@ -409,6 +406,7 @@ bush4.position.set(-1, 0.05, 3.5)
 bush4.rotation.x = - 0.75
 
 chapel.add(bush1, bush2, bush3, bush4)
+
 
 
 // ☰☰☰☰☰☰ Graves ☰☰☰☰☰☰
@@ -532,6 +530,7 @@ controls.enableDamping = true
 const cameraHelper = new THREE.CameraHelper(camera)
 scene.add(cameraHelper)
 
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                          Renderer 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░    
@@ -540,6 +539,36 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+//                         Shadows
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+
+// ☰☰☰☰☰☰ Renderer ☰☰☰☰☰☰
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
+
+// ☰☰☰☰☰☰ Cast and receive  ☰☰☰☰☰☰
+directionalLight.castShadow = true
+ghost1.castShadow = true
+ghost2.castShadow = true
+ghost3.castShadow = true
+
+mainWalls.castShadow = true
+mainWalls.receiveShadow = true
+
+towerWalls.castShadow = true
+towerWalls.receiveShadow = true
+
+ground.receiveShadow = true
+
+gravesGroup.children.forEach((grave) => {
+    // console.log(grave)
+    grave.castShadow = true
+    grave.receiveShadow = true
+})
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { Sky } from 'three/addons/objects/Sky.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
@@ -573,7 +574,6 @@ gravesGroup.children.forEach((grave) => {
     grave.receiveShadow = true
 })
 
-
 // ☰☰☰☰☰☰ Mapping ☰☰☰☰☰☰
 directionalLight.shadow.mapSize.width = 1024
 directionalLight.shadow.mapSize.height = 1024
@@ -583,7 +583,6 @@ directionalLight.shadow.camera.bottom = -8
 directionalLight.shadow.camera.left = -8
 directionalLight.shadow.camera.near = 1
 directionalLight.shadow.camera.far = 20
-
 
 ghost1.shadow.mapSize.width = 1024
 ghost1.shadow.mapSize.height = 1024
@@ -596,6 +595,22 @@ ghost2.shadow.camera.far = 10
 ghost3.shadow.mapSize.width = 1024
 ghost3.shadow.mapSize.height = 1024
 ghost3.shadow.camera.far = 10
+
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+//                           Sky    
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  
+const sky = new Sky()
+sky.scale.set(100, 100, 100)
+scene.add(sky)
+
+sky.material.uniforms['turbidity'].value = 10 
+sky.material.uniforms['rayleigh'].value = 3 
+sky.material.uniforms['mieCoefficient'].value = 0.1 
+sky.material.uniforms['mieDirectionalG'].value = 0.95
+sky.material.uniforms['sunPosition'].value.set(0.3, -0.038, -0.95)
+
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Animate    

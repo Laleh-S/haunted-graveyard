@@ -574,6 +574,29 @@ gravesGroup.children.forEach((grave) => {
 })
 
 
+// ☰☰☰☰☰☰ Mapping ☰☰☰☰☰☰
+directionalLight.shadow.mapSize.width = 1024
+directionalLight.shadow.mapSize.height = 1024
+directionalLight.shadow.camera.top = 8
+directionalLight.shadow.camera.right = 8
+directionalLight.shadow.camera.bottom = -8
+directionalLight.shadow.camera.left = -8
+directionalLight.shadow.camera.near = 1
+directionalLight.shadow.camera.far = 20
+
+
+ghost1.shadow.mapSize.width = 1024
+ghost1.shadow.mapSize.height = 1024
+ghost1.shadow.camera.far = 10
+
+ghost2.shadow.mapSize.width = 1024
+ghost2.shadow.mapSize.height = 1024
+ghost2.shadow.camera.far = 10
+
+ghost3.shadow.mapSize.width = 1024
+ghost3.shadow.mapSize.height = 1024
+ghost3.shadow.camera.far = 10
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Animate    
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   

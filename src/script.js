@@ -122,8 +122,6 @@ graveColorTexture.repeat.set(0.4, 0.5) // Asking the texture to repeat 0.3 times
 graveArmTexture.repeat.set(0.4, 0.5)
 graveNormalTexture.repeat.set(0.4, 0.5)
 
-
-
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Models
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -335,7 +333,12 @@ chapel.add(towerGroup)
 const crossGroup = new THREE.Group()
 
 const barGeometry = new THREE.BoxGeometry(0.05, 0.7, 0.05)
-const barMaterial = new THREE.MeshStandardMaterial({ })
+const barMaterial = new THREE.MeshStandardMaterial({
+    color: '#d0d0d0',
+    roughness: 0.4,  
+    metalness: 1
+ })
+
 
 // Vertical bar
 const verticalBar = new THREE.Mesh(barGeometry, barMaterial)

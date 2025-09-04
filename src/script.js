@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { Sky } from 'three/addons/objects/Sky.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { Timer } from 'three/addons/misc/Timer.js'
@@ -24,6 +25,9 @@ const scene = new THREE.Scene()
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 const textureLoader = new THREE.TextureLoader()
 
+
+const particleTexture = textureLoader.load('/texture/1.png')
+
 // ☰☰☰☰☰☰ Ground ☰☰☰☰☰☰
 const groundAlphaTexture = textureLoader.load('/floor/alpha.jpg')
 const groundColorTexture = textureLoader.load('/floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp')
@@ -43,7 +47,6 @@ groundTexturesRepeat.forEach((texture) => {
     texture.wrapT = THREE.RepeatWrapping
     texture.repeat.set(8, 8)
 })
-
 
 
 // ☰☰☰☰☰☰ Walls ☰☰☰☰☰☰
@@ -123,6 +126,8 @@ graveColorTexture.repeat.set(0.4, 0.5) // Asking the texture to repeat 0.3 times
 graveArmTexture.repeat.set(0.4, 0.5)
 graveNormalTexture.repeat.set(0.4, 0.5)
 
+
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Models
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -179,6 +184,7 @@ loader.load('./models/towerWindow.glb', (gltf) => {
     towerWindowGroup.add(towerWindowModel, glow)
     chapel.add(towerWindowGroup)
 })
+
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -265,7 +271,6 @@ mainRoofGroup.add(rightPanel, leftPanel)
 chapel.add(mainRoofGroup) 
 
 
-
 // ☰☰☰☰☰☰ Traingles between the roof panels ☰☰☰☰☰☰
 const triangleGroup = new THREE.Group()
 
@@ -291,7 +296,6 @@ backtriangle.position.set(0, 2.7, -2.76)
 
 triangleGroup.add(fronttriangle, backtriangle)
 chapel.add(triangleGroup)
-
 
 
 // ☰☰☰☰☰☰ Tower ☰☰☰☰☰☰
@@ -327,7 +331,6 @@ towerRoof.position.z = 1.7
 
 towerGroup.add(towerWalls, towerRoof) 
 chapel.add(towerGroup)
-
 
 
 // ☰☰☰☰☰☰ Cross ☰☰☰☰☰☰
@@ -377,7 +380,6 @@ doorcanopyGroup.add(canopyRightPanel, canopyLeftPanel)
 chapel.add(doorcanopyGroup)
 
 
-
 // ☰☰☰☰☰☰ Bushes ☰☰☰☰☰☰
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16)
 const bushMaterial = new THREE.MeshStandardMaterial({
@@ -410,7 +412,6 @@ bush4.position.set(-1, 0.05, 3.5)
 bush4.rotation.x = - 0.75
 
 chapel.add(bush1, bush2, bush3, bush4)
-
 
 
 // ☰☰☰☰☰☰ Graves ☰☰☰☰☰☰
@@ -452,6 +453,7 @@ for (let i = 0; i < 30; i ++){
 }
 
 
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -470,9 +472,10 @@ doorLight.decay = 3
 doorLight.position.set(0, 2.2, 3.2)
 chapel.add(doorLight)
 
+
 const doorLightFolder = gui.addFolder( 'Door Light' )
 doorLightFolder.addColor(doorLight, 'color').min(0).max(3).step(0.001).name('Door Light Color')
-doorLightFolder.add(doorLight, 'intensity').min(0.2).max(3).step(0.001).name('Door Light Intensity')
+doorLightFolder.add(doorLight, 'intensity').min(0.5).max(6).step(0.001).name('Door Light Intensity')
 
 
 
@@ -480,9 +483,9 @@ doorLightFolder.add(doorLight, 'intensity').min(0.2).max(3).step(0.001).name('Do
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Ghost
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
-const ghost1 = new THREE.PointLight('#8800ff', 6)
-const ghost2 = new THREE.PointLight('#ff0088', 6)
-const ghost3 = new THREE.PointLight('#ff0000', 6)
+const ghost1 = new THREE.PointLight('#8800ff', 10)
+const ghost2 = new THREE.PointLight('#ff0088', 10)
+const ghost3 = new THREE.PointLight('#ff0000', 10)
 scene.add(ghost1, ghost2, ghost3)
 
 
@@ -510,6 +513,8 @@ window.addEventListener('resize', () =>
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
+
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Camera
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -530,9 +535,6 @@ controls.enableDamping = true
 // controls.target.set(0, 1, 2)
 // controls.update()
 
-// ☰☰☰☰☰☰ Camera helper ☰☰☰☰☰☰
-const cameraHelper = new THREE.CameraHelper(camera)
-scene.add(cameraHelper)
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -597,6 +599,7 @@ ghost3.shadow.mapSize.height = 1024
 ghost3.shadow.camera.far = 10
 
 
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Sky    
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  
@@ -613,6 +616,13 @@ sky.material.uniforms['sunPosition'].value.set(0.3, -0.038, -0.95)
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
+//                           Fog   
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  
+scene.fog = new THREE.FogExp2('#223344', 0.1) // 0.1 is the density
+
+
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Animate    
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 const timer = new Timer()
@@ -622,6 +632,7 @@ const tick = () =>
     // ☰☰☰☰☰☰  Timer ☰☰☰☰☰☰  
     timer.update()
     const elapsedTime = timer.getElapsed()
+
 
 
     // ☰☰☰☰☰☰  Ghost ☰☰☰☰☰☰  
@@ -640,7 +651,6 @@ const tick = () =>
     ghost3.position.z = Math.sin(ghost3Angle) * 6
     ghost3.position.y = Math.sin(ghost3Angle) * Math.sin(ghost3Angle * 2.34) * Math.sin(ghost3Angle * 3.45)
     
-
     // ☰☰☰☰☰☰ Update controls ☰☰☰☰☰☰
     controls.update()
 

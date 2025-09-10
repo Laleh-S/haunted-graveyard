@@ -20,6 +20,7 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                            Textures
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
@@ -527,6 +528,9 @@ camera.position.set(4, 3, 8)
 camera.lookAt(0, 1, 0)
 scene.add(camera)
 
+const listener = new THREE.AudioListener()
+camera.add(listener)
+
 // ☰☰☰☰☰☰ Controls ☰☰☰☰☰☰
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
@@ -534,6 +538,36 @@ controls.enableDamping = true
 // Focus the camera on the center of the house
 // controls.target.set(0, 1, 2)
 // controls.update()
+
+
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 
+//                             Sound
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  
+
+const sound = new THREE.Audio(listener) // Creates a sound object that uses a listener
+const audioLoader = new THREE.AudioLoader() // Creates a loader to load audio files into that sound
+
+audioLoader.load('/sound/wind-blowing-ambience.wav', (buffer) => {
+    sound.setBuffer(buffer)
+    sound.setLoop(true)
+	sound.setVolume(0.5)
+})
+scene.add(sound)
+
+let isPlaying = false 
+const handleSound = () => {
+    if (isPlaying){
+        sound.stop()
+        isPlaying = false
+    } else {
+        sound.play()
+        isPlaying = true
+    }
+}
+const soundFolder = gui.addFolder('Sound setting')
+soundFolder.add({ toggle: handleSound }, 'toggle').name('Play / Stop')
+
 
 
 

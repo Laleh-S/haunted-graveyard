@@ -454,6 +454,144 @@ for (let i = 0; i < 30; i ++){
 }
 
 
+// ☰☰☰☰☰☰ Tree ☰☰☰☰☰☰
+const treeColorTexture = textureLoader.load('/tree/pine_bark_1k/pine_bark_diff_1k.jpg')
+const treeArmTexture = textureLoader.load('/tree/pine_bark_1k/pine_bark_arm_1k.jpg')
+const treeNormalTexture = textureLoader.load('/tree/pine_bark_1k/pine_bark_nor_gl_1k.jpg')
+const treeDisplacementTexture = textureLoader.load('/tree/pine_bark_1k/pine_bark_disp_1k.jpg')
+treeColorTexture.colorSpace = THREE.SRGBColorSpace
+
+const treeTexturesRepeat = [
+    treeColorTexture, 
+    treeArmTexture, 
+    treeNormalTexture, 
+    treeDisplacementTexture
+]
+treeTexturesRepeat.forEach((texture) => {
+    texture.wrapS = THREE.RepeatWrapping
+    texture.wrapT = THREE.RepeatWrapping
+    texture.repeat.set(3, 3)
+})
+
+const treeGroup = new THREE.Group()
+
+// Trunk
+const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.2, 4) // RadiusTop, RadiusBottom, Height
+const trunkMaterial = new THREE.MeshStandardMaterial({
+    color: '#6d5617',
+  map: treeColorTexture,
+  normalMap: treeNormalTexture,
+  aoMap: treeArmTexture,
+  roughnessMap: treeArmTexture,
+//   displacementMap: treeDisplacementTexture,
+//   displacementScale: 0.1, 
+})
+const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial)
+trunk.position.y = 4 / 2 // 4 = height of the geometry
+
+treeGroup.add(trunk)
+
+// Branch 1
+const branch1Curve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 1.3, 0), // x: Cncentered left/right on trunk, y: 2 units up the trunk—this is where the branch starts, z: centered front/back on trunk
+    new THREE.Vector3(1.2, 2.4, 0.8), // x: 0.9 units right of trunk center, y: 2.4 a little higher than start, z: 0.8 units forward/out from trunk
+    new THREE.Vector3(1.5, 3, 0.5), // x: 1.2 further right, y: 3 higher up, z: 0.5 slightly less forward, makes a curve inward
+    new THREE.Vector3(1.3, 3.8, 0.9), // x: 1.0 maintains rightward position, y: 3.8 getting near top of trunk, z: 0.9 forward again
+    new THREE.Vector3(1.8, 4.1, 1.2) // x: 1.5 as far right as this branch goes, y: 4.1 top point, z: 1.2 (very forward, tip of branch)
+])
+const branch1Geometry = new THREE.TubeGeometry(branch1Curve, 50, 0.1, 8, false)
+const branch1Material = new THREE.MeshStandardMaterial({
+     color: '#6d5617',
+  map: treeColorTexture,
+  normalMap: treeNormalTexture,
+  aoMap: treeArmTexture,
+  roughnessMap: treeArmTexture,
+})
+const branch1 = new THREE.Mesh(branch1Geometry, branch1Material)
+treeGroup.add(branch1)
+
+// branch 2 
+const branch2Curve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 1.5, 0),
+    new THREE.Vector3(-0.9, 2, 0.7), // more left
+    new THREE.Vector3(-1.4, 2.7, 0.9),
+    new THREE.Vector3(-1.2, 3.5, 1.1)
+])
+const branch2Geometry = new THREE.TubeGeometry(branch2Curve, 50, 0.1, 8, false)
+const branch2Material = new THREE.MeshStandardMaterial({
+    color: '#6d5617',
+  map: treeColorTexture,
+  normalMap: treeNormalTexture,
+  aoMap: treeArmTexture,
+  roughnessMap: treeArmTexture,
+//   displacementMap: treeDisplacementTexture,
+//   displacementScale: 0.1, 
+})
+const branch2 = new THREE.Mesh(branch2Geometry, branch2Material)
+treeGroup.add(branch2)
+
+// branch 3 
+const branch3Curve = new THREE.CatmullRomCurve3([
+     new THREE.Vector3(0, 2, 0),
+    new THREE.Vector3(-0.9, 2.3, -0.7),
+    new THREE.Vector3(-1.3, 3.0, -1.1),
+    new THREE.Vector3(-1.7, 3.6, -1.5),
+    new THREE.Vector3(-2, 4.2, -1.9)
+])
+const branch3Geometry = new THREE.TubeGeometry(branch3Curve, 20, 0.1, 8, false)
+const branch3Material = new THREE.MeshStandardMaterial({
+     color: '#6d5617',
+  map: treeColorTexture,
+  normalMap: treeNormalTexture,
+  aoMap: treeArmTexture,
+  roughnessMap: treeArmTexture,
+})
+const branch3 = new THREE.Mesh(branch3Geometry, branch3Material)
+treeGroup.add(branch3)
+
+
+// Branch 4
+const branch4Curve = new THREE.CatmullRomCurve3([
+     new THREE.Vector3(0, 2.5, 0),   // base: slightly right/front of blue
+    new THREE.Vector3(-2.0, 2.5, -1.7),
+    new THREE.Vector3(-2.3, 3.1, -1.8),
+    new THREE.Vector3(-2.1, 3.7, -2.0),
+    new THREE.Vector3(-1.8, 4.2, -2.1) 
+    
+])
+const branch4Geometry = new THREE.TubeGeometry(branch4Curve, 20, 0.1, 10, false)
+const branch4Material = new THREE.MeshStandardMaterial({
+     color: '#6d5617',
+  map: treeColorTexture,
+  normalMap: treeNormalTexture,
+  aoMap: treeArmTexture,
+  roughnessMap: treeArmTexture,
+})
+const branch4 = new THREE.Mesh(branch4Geometry, branch4Material)
+treeGroup.add(branch4)
+
+
+const branch5Curve = new THREE.CatmullRomCurve3([
+     new THREE.Vector3(0, 1.8, 0),
+    new THREE.Vector3(0.9, 2, 0.7), // more left
+    new THREE.Vector3(1.4, 2.7, 0.9),
+    new THREE.Vector3(1.2, 3.5, 1.1)
+])
+const branch5Geometry = new THREE.TubeGeometry(branch5Curve, 20, 0.1, 10, false)
+const branch5Material = new THREE.MeshStandardMaterial({
+     color: '#6d5617',
+  map: treeColorTexture,
+  normalMap: treeNormalTexture,
+  aoMap: treeArmTexture,
+  roughnessMap: treeArmTexture,
+})
+const branch5 = new THREE.Mesh(branch5Geometry, branch5Material)
+treeGroup.add(branch5)
+
+
+treeGroup.position.set(-5, 0, 5) 
+scene.add(treeGroup)
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   
 //                           Lights

@@ -465,7 +465,7 @@ treeColorTexture.colorSpace = THREE.SRGBColorSpace
 // Trunk
 const treeGroup = new THREE.Group()
 const trunk = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.1, 0.2, 4), // RadiusTop, RadiusBottom, Height
+    new THREE.CylinderGeometry(0.1, 0.2, 5), // RadiusTop, RadiusBottom, Height
     new THREE.MeshStandardMaterial({
     map: treeColorTexture,
     normalMap: treeNormalTexture,
@@ -475,7 +475,7 @@ const trunk = new THREE.Mesh(
      color: '#aaaaaa',
 })
 )
-trunk.position.y = 4 / 2 // 4 = height of the geometry
+trunk.position.y = 5 / 2 // 4 = height of the geometry
 
 // Branch material
 const branchMaterial = new THREE.MeshStandardMaterial({
@@ -489,10 +489,10 @@ const branchMaterial = new THREE.MeshStandardMaterial({
 
 // Branch 1
 const branch1Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 1.5, 0),
-    new THREE.Vector3(0.4, 2.0, 0.4),  
-    new THREE.Vector3(1.2, 2.2, 0.8),   
-    new THREE.Vector3(1.55, 2.5, 1)  // branch tip
+      new THREE.Vector3(0, 1.7, 0),        
+    new THREE.Vector3(0.4, 2.4, -0.2),    
+    new THREE.Vector3(0.8, 2.7, -0.6),    
+    new THREE.Vector3(0.9, 4.4, -0.7) 
 ])
 const branch1 = new THREE.Mesh(
     new THREE.TubeGeometry(branch1Curve, 20, 0.1, 8, false),
@@ -501,10 +501,10 @@ const branch1 = new THREE.Mesh(
 
 // branch 2 
 const branch2Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 1.5, 0),
-    new THREE.Vector3(-0.6, 2.0, -0.4),   
-    new THREE.Vector3(-1.5, 3.1, -0.9),   
-    new THREE.Vector3(-1.75, 3.5, -1.25)  
+    new THREE.Vector3(0, 1.7, 0),        
+    new THREE.Vector3(-0.4, 2.4, 0.2),    
+    new THREE.Vector3(-0.8, 2.7, 0.6),    
+    new THREE.Vector3(-0.9, 4.4, 0.7) 
 ])
 const branch2 = new THREE.Mesh(
     new THREE.TubeGeometry(branch2Curve, 20, 0.1, 8, false),
@@ -513,15 +513,10 @@ const branch2 = new THREE.Mesh(
 
 // branch 3 
 const branch3Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 1.7, 0),         
-    new THREE.Vector3(0.4, 2.4, 0.2),    
-    new THREE.Vector3(0.8, 2.7, 0.6),     
-    new THREE.Vector3(1.0, 3.6, 0.8) 
-
-    // new THREE.Vector3(0, 1.7, 0),     
-    // new THREE.Vector3(0.2, 2.5, 0.2), 
-    // new THREE.Vector3(0.5, 3.1, 0.6), 
-    // new THREE.Vector3(0.7, 3.2, 0.6)  
+    new THREE.Vector3(0, 2, 0),
+new THREE.Vector3(0.6, 2.7, 0.2),
+new THREE.Vector3(1, 3, 0.8),
+new THREE.Vector3(1.1, 4.7, 0.9)
 ])
 const branch3 = new THREE.Mesh(
     new THREE.TubeGeometry(branch3Curve, 20, 0.1, 8, false),
@@ -530,35 +525,37 @@ const branch3 = new THREE.Mesh(
 
 // Branch 4
 const branch4Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 1.7, 0),        
-    new THREE.Vector3(0.4, 2.4, -0.2),    
-    new THREE.Vector3(0.8, 3.2, -0.6),    
-    new THREE.Vector3(0.9, 3.4, -0.7) 
+    new THREE.Vector3(-0, 2, 0),
+new THREE.Vector3(-0.8, 2.7, -0.4),
+new THREE.Vector3(-1, 3, -0.8),
+new THREE.Vector3(-1.1, 4.7, -0.9)
 ])
 
 const branch4 = new THREE.Mesh(
-    new THREE.TubeGeometry(branch4Curve, 20, 0.1, 10, false),
+    new THREE.TubeGeometry(branch4Curve, 20, 0.1, 8, false),
     branchMaterial
 )
 
 // Branch 5
 const branch5Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 2.6, 0),     
-    new THREE.Vector3(0.2, 3.0, 0.1), 
-    new THREE.Vector3(0.5, 3.6, 0.6), 
-    new THREE.Vector3(0.7, 4.2, 0.6)  
+   new THREE.Vector3(0, 2.3, 0),        
+    new THREE.Vector3(0.6, 3, -0.4),    
+    new THREE.Vector3(1, 3.3, -0.8),    
+    new THREE.Vector3(1.1, 5.3, -0.9) 
+    
 ])
 const branch5 = new THREE.Mesh(
-    new THREE.TubeGeometry(branch5Curve, 20, 0.1, 10, false), 
+    new THREE.TubeGeometry(branch5Curve, 20, 0.1, 8, false), 
     branchMaterial
 )
 
 // branch 6
 const branch6Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 2.6, 0),     
-    new THREE.Vector3(-0.2, 3.0, -0.1), 
-    new THREE.Vector3(-0.5, 3.6, -0.6), 
-    new THREE.Vector3(-0.7, 4.2, -1.0)  
+ new THREE.Vector3(0, 2.3, 0),        
+    new THREE.Vector3(-0.6, 3, 0.4),    
+    new THREE.Vector3(-1, 3.3, 0.8),    
+    new THREE.Vector3(-1.1, 5.3, 0.9) 
+
 ])
 const branch6 = new THREE.Mesh(
     new THREE.TubeGeometry(branch6Curve, 20, 0.1, 8, false),
@@ -567,10 +564,11 @@ const branch6 = new THREE.Mesh(
 
 // branch 7
 const branch7Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0, 3.5, 0),    
-    new THREE.Vector3(0.25, 3.8, 0.25), 
-    new THREE.Vector3(0.3, 4.5, 0.3),  
-    // new THREE.Vector3(0.5, 4.8, 0.4)   
+
+ new THREE.Vector3(0, 2.6, 0),        
+    new THREE.Vector3(0.4, 3.3, 0.2),    
+    new THREE.Vector3(0.8, 3.6, 0.6),    
+    new THREE.Vector3(1.5, 5.4, 0.7) 
 ])
 const branch7 = new THREE.Mesh(
     new THREE.TubeGeometry(branch7Curve, 20, 0.1, 8, false),
@@ -579,29 +577,55 @@ const branch7 = new THREE.Mesh(
 
 // branch 8
 const branch8Curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, 2.5, 0),     
-    new THREE.Vector3(-0.4, 3.8, -0.4), 
-    new THREE.Vector3(-0.3, 4.5, -0.3),  
+   new THREE.Vector3(0, 3.2, 0),        
+    new THREE.Vector3(0.4, 3.9, -0.2),    
+    new THREE.Vector3(0.8, 4.2, -0.6),    
+    new THREE.Vector3(0.9, 5.9, -0.7) 
 ])
 const branch8 = new THREE.Mesh(
     new THREE.TubeGeometry(branch8Curve, 20, 0.1, 8, false),
     branchMaterial
 )
 
+// branch 9
+const branch9Curve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 4.2, 0),        
+    new THREE.Vector3(-0.4, 3.9, -0.2),    
+    new THREE.Vector3(-0.8, 4.2, -0.6),    
+    new THREE.Vector3(-0.9, 5.9, -0.7) 
+])
+const branch9 = new THREE.Mesh(
+    new THREE.TubeGeometry(branch9Curve, 20, 0.1, 8, false),
+    branchMaterial
+)
+
+// branch 10
+const branch10Curve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 4.2, 0),        
+    new THREE.Vector3(0.4, 3.9, 0.2),    
+    new THREE.Vector3(0.8, 4.2, 0.6),    
+    new THREE.Vector3(0.9, 5.9, 0.7) 
+])
+const branch10 = new THREE.Mesh(
+    new THREE.TubeGeometry(branch10Curve, 20, 0.1, 8, false),
+    branchMaterial
+)
+
 treeGroup.add(
     trunk,
     branch1, 
-    // branch2, 
+    branch2, 
     branch3, 
-    // branch4, 
+    branch4,
     branch5, 
     branch6,
     branch7,
-    branch8
+    branch8, 
+    branch9, 
 )
 
 treeGroup.position.set(-5, 0, 5) 
-treeGroup.rotation.y = -0.3
+// treeGroup.rotation.y = -0.3
 
 scene.add(treeGroup)
 
